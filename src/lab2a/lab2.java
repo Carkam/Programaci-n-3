@@ -15,9 +15,10 @@ import javax.swing.table.DefaultTableModel;
      * totales por departamento
      */
 public class lab2 extends javax.swing.JFrame {
-     int iPreguntaMenu, iSueldoBase, iTotalDeducciones, iTotalPercepciones, iSueldoLiquido,iSumador;
-        String [][] sTotalDepartamento=new String[11][6];
-        int[] iTotales=new int[5];   
+     int iPreguntaMenu, iSueldoBase, iTotalDeducciones, iTotalPercepciones, iSueldoLiquido,iSumador, iRentaImponible;
+        double dValorIsr;
+        String [][] sTotalDepartamento=new String[11][10];
+        int[] iTotales=new int[5];
     /**
      * Creates new form lab2
      */
@@ -75,13 +76,13 @@ public class lab2 extends javax.swing.JFrame {
 
         tblMatriz.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre Empleado", "Sueldo Base", "Total Deducciones", "Total Percepciones", "Sueldo Liquido", "Departamento"
+                "Codigol", "Nombre Empleado", "Sueldo Base", "Bonificación", "Comisiones", "IGSS", "Descuentos Judiciales", "ISR", "Sueldo Liquido", "Departamento"
             }
         ));
         jScrollPane1.setViewportView(tblMatriz);
@@ -128,11 +129,11 @@ public class lab2 extends javax.swing.JFrame {
                 .addComponent(btnMostrar)
                 .addGap(112, 112, 112)
                 .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(609, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDepartamento1)
                     .addComponent(lblDepartamento2)
@@ -151,15 +152,12 @@ public class lab2 extends javax.swing.JFrame {
                     .addComponent(btnIngresar)
                     .addComponent(btnMostrar)
                     .addComponent(btnLimpiar))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(21, 21, 21)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addComponent(lblDepartamento1)
                         .addGap(28, 28, 28)
                         .addComponent(lblDepartamento2)
@@ -168,8 +166,10 @@ public class lab2 extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(lblDepartamento4)
                         .addGap(29, 29, 29)
-                        .addComponent(lblDepartamento5)
-                        .addGap(40, 40, 40)))
+                        .addComponent(lblDepartamento5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -179,11 +179,14 @@ public class lab2 extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         //ciclo for para llenar la matriz y pedir nombre de los empleados  
         for (int i = 1; i <= 10; i++) {            
-                    sTotalDepartamento[i][0]=JOptionPane.showInputDialog("Ingrese el nombre del empleado #"+i);
-                    sTotalDepartamento[i][1]=Integer.toString((int) (2000+(Math.random()*5000)));
-                    sTotalDepartamento[i][2]=Integer.toString((int) (1000+(Math.random()*2500)));
-                    sTotalDepartamento[i][3]=Integer.toString((int) (1250+(Math.random()*2000)));
-                    sTotalDepartamento[i][5]=Integer.toString((int) (1+(Math.random()*5)));
+                   sTotalDepartamento[i][0]=Integer.toString((int) (i));
+                    sTotalDepartamento[i][1]=JOptionPane.showInputDialog("Ingrese el nombre del empleado #"+i);
+                    sTotalDepartamento[i][2]=Integer.toString((int) (2000+(Math.random()*15000)));
+                    sTotalDepartamento[i][3]=Integer.toString((int) (1000+(Math.random()*4000)));
+                    sTotalDepartamento[i][4]=Integer.toString((int) (1250+(Math.random()*5000)));
+                    sTotalDepartamento[i][5]=Integer.toString((int) (250+(Math.random()*750)));
+                    sTotalDepartamento[i][6]=Integer.toString((int) (250+(Math.random()*750)));
+                    sTotalDepartamento[i][9]=Integer.toString((int)(1+(Math.random()*5)));
             }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -192,7 +195,7 @@ public class lab2 extends javax.swing.JFrame {
     //llamamos a Sueldo Liquido para poder obtener el total de cada empleado 
         SueldoLiquido();
     //mostramos todos los datos de la matriz en la tabla jtMatriz
-        tblMatriz.setModel(new javax.swing.table.DefaultTableModel(sTotalDepartamento, new String[]{"Nombre Empleado","Sueldo Base","Total Deducciones","Total Percepciones","Sueldo Liquido","Departamento"}));
+        tblMatriz.setModel(new javax.swing.table.DefaultTableModel(sTotalDepartamento, new String[]{"Codgio","Nombre Empleado","Sueldo Base","Bonificación","Comisiones","IGSS","Descuentos Judiciales","ISR","Sueldo Liquido","Departamento"}));
       //llamamos a la funcion fTotalDepartamento para obtener cada total para cada departamento
       fTotalDepartamento();
    //creamos una variable DefaultTableModel para hacer un modelo de lo que vamos a mostrar en la tabla
@@ -242,14 +245,17 @@ public class lab2 extends javax.swing.JFrame {
 public void SueldoLiquido(){
         //ciclo for para obtener el sueldo liquido
             for (int i = 1; i <= 10; i++) {
-                //covertimos a entero los valores de las columnas sueldo base, total deducciones y percepciones para poder operarlas
-                 iSueldoBase=Integer.parseInt(sTotalDepartamento[i][1]);
-                 iTotalDeducciones=Integer.parseInt(sTotalDepartamento[i][2]);
-                 iTotalPercepciones=Integer.parseInt(sTotalDepartamento[i][3]);
+                    iSueldoBase=Integer.parseInt(sTotalDepartamento[i][2]);
+                 iTotalDeducciones=Integer.parseInt(sTotalDepartamento[i][5])+Integer.parseInt(sTotalDepartamento[i][6]);
+                 iTotalPercepciones=Integer.parseInt(sTotalDepartamento[i][4])+Integer.parseInt(sTotalDepartamento[i][3]);
+                 iRentaImponible=(iSueldoBase+iTotalPercepciones)-iTotalDeducciones;
+                 //enviamos la renta imponible para calcular el isr de cada trabajador
+                 dValorIsr=fCalculoISR(iRentaImponible);
+                 sTotalDepartamento[i][7]=Integer.toString((int)(dValorIsr));
                  //enviamos sueldo,deducciones y percepciones a funcion para obtener el sueldo liquido
-                 iSueldoLiquido=fSueldoLiquido(iSueldoBase,iTotalDeducciones,iTotalPercepciones);
+                 iSueldoLiquido=fSueldoLiquido(iSueldoBase,(iTotalDeducciones+(int)(dValorIsr)),iTotalPercepciones);
                  //convertimos a string el valor del sueldo liquido para poder guardar en matriz
-                 sTotalDepartamento[i][4]=Integer.toString(iSueldoLiquido);
+                 sTotalDepartamento[i][8]=Integer.toString(iSueldoLiquido);
             }
 }
  public static int fSueldoLiquido(int iSueldo,int iDeducciones,int iPercepciones){
@@ -262,22 +268,34 @@ public void SueldoLiquido(){
      return iLiquido;
      
  } 
+  public static double fCalculoISR(int iRenta){
+    //funcion para el calculo del isr del empleado
+    int [][] iISR=new int[][]{{1,30000},{30001,30001}};
+    double dCalculoIsr = 0;
+     if ((iRenta>=iISR[0][0]) && (iRenta<=iISR[0][1])) {
+         dCalculoIsr=iRenta*0.05;
+     }else if ((iRenta>=iISR[1][0])) {
+         dCalculoIsr=iRenta*0.07;
+     }
+        return dCalculoIsr;     
+ }
  public void fTotalDepartamento(){
           //ciclo for para llenar el vector itotales
             for (int i = 1; i <= 10; i++) {
-                //convertimos a entero el valor del sueldo liquido para poder operar
-                iSumador=Integer.parseInt(sTotalDepartamento[i][4]);
+                   //convertimos a entero el valor del sueldo liquido para poder operar
+                iSumador=Integer.parseInt(sTotalDepartamento[i][8]);
                 //segun el numero del departamento sumamos las cantidades del sueldo liquido
-                if (sTotalDepartamento[i][5].equals("1")) {
+                if (sTotalDepartamento[i][9].equals("1")) {
                     iTotales[0]=iTotales[0]+iSumador;
-                }else if (sTotalDepartamento[i][5].equals("2")) {
+                }else if (sTotalDepartamento[i][9].equals("2")) {
                      iTotales[1]=iTotales[1]+iSumador;
-                }else if (sTotalDepartamento[i][5].equals("3")) {
+                }else if (sTotalDepartamento[i][9].equals("3")) {
                      iTotales[2]=iTotales[2]+iSumador;
-                }else if (sTotalDepartamento[i][5].equals("4")) {
+                }else if (sTotalDepartamento[i][9].equals("4")) {
                      iTotales[3]=iTotales[3]+iSumador;
-                }else if (sTotalDepartamento[i][5].equals("5")) {
+                }else if (sTotalDepartamento[i][9].equals("5")) {
                      iTotales[4]=iTotales[4]+iSumador;
+                             
                 }
             }
  }
