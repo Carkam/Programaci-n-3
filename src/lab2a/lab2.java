@@ -49,6 +49,8 @@ public class lab2 extends javax.swing.JFrame {
         lblDepartamento3 = new javax.swing.JLabel();
         lblDepartamento4 = new javax.swing.JLabel();
         lblDepartamento5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblTotal1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +122,20 @@ public class lab2 extends javax.swing.JFrame {
         lblDepartamento5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDepartamento5.setText("Departamento 5");
 
+        tblTotal1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tblTotal1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1-5000", "3%"},
+                {"5001-10000", "5%"},
+                {"10000-100000", "10%"}
+            },
+            new String [] {
+                "Rango", "Porcentaje"
+            }
+        ));
+        tblTotal1.setRowHeight(40);
+        jScrollPane3.setViewportView(tblTotal1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,48 +147,57 @@ public class lab2 extends javax.swing.JFrame {
                 .addComponent(btnMostrar)
                 .addGap(112, 112, 112)
                 .addComponent(btnLimpiar)
-                .addContainerGap(609, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDepartamento1)
-                    .addComponent(lblDepartamento2)
-                    .addComponent(lblDepartamento3)
-                    .addComponent(lblDepartamento4)
-                    .addComponent(lblDepartamento5))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDepartamento5)
+                            .addComponent(lblDepartamento1)
+                            .addComponent(lblDepartamento2)
+                            .addComponent(lblDepartamento3)
+                            .addComponent(lblDepartamento4))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIngresar)
-                    .addComponent(btnMostrar)
-                    .addComponent(btnLimpiar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnIngresar)
+                            .addComponent(btnMostrar)
+                            .addComponent(btnLimpiar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(lblDepartamento1)
+                                .addGap(28, 28, 28)
+                                .addComponent(lblDepartamento2)
+                                .addGap(28, 28, 28)
+                                .addComponent(lblDepartamento3)
+                                .addGap(28, 28, 28)
+                                .addComponent(lblDepartamento4)
+                                .addGap(5, 5, 5)
+                                .addComponent(lblDepartamento5)
+                                .addGap(52, 52, 52)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(lblDepartamento1)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblDepartamento2)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblDepartamento3)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblDepartamento4)
-                        .addGap(29, 29, 29)
-                        .addComponent(lblDepartamento5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(52, 52, 52)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,7 +275,7 @@ public void SueldoLiquido(){
                     iSueldoBase=Integer.parseInt(sTotalDepartamento[i][2]);
                  iTotalDeducciones=Integer.parseInt(sTotalDepartamento[i][5])+Integer.parseInt(sTotalDepartamento[i][6]);
                  iTotalPercepciones=Integer.parseInt(sTotalDepartamento[i][4])+Integer.parseInt(sTotalDepartamento[i][3]);
-                 iRentaImponible=(iSueldoBase+iTotalPercepciones)-iTotalDeducciones;
+                 iRentaImponible=iSueldoBase;
                  //enviamos la renta imponible para calcular el isr de cada trabajador
                  dValorIsr=fCalculoISR(iRentaImponible);
                  sTotalDepartamento[i][7]=dfFormato.format(dValorIsr);
@@ -272,12 +297,14 @@ public void SueldoLiquido(){
  } 
   public static double fCalculoISR(int iRenta){
     //funcion para el calculo del isr del empleado
-    int [][] iISR=new int[][]{{1,30000},{30001,30001}};
+    int [][] iISR=new int[][]{{1,5000},{5001,10000},{10001,100000}};
     double dCalculoIsr = 0;
      if ((iRenta>=iISR[0][0]) && (iRenta<=iISR[0][1])) {
+         dCalculoIsr=iRenta*0.03;
+     }else if ((iRenta>=iISR[1][0]) && (iRenta<=iISR[1][1])) {
          dCalculoIsr=iRenta*0.05;
-     }else if ((iRenta>=iISR[1][0])) {
-         dCalculoIsr=iRenta*0.07;
+     }else if ((iRenta>=iISR[2][0]) && (iRenta<=iISR[2][1])) {
+         dCalculoIsr=iRenta*0.1;
      }
         return dCalculoIsr;     
  }
@@ -342,6 +369,7 @@ public void SueldoLiquido(){
     private javax.swing.JButton btnMostrar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblDepartamento1;
     private javax.swing.JLabel lblDepartamento2;
     private javax.swing.JLabel lblDepartamento3;
@@ -349,5 +377,6 @@ public void SueldoLiquido(){
     private javax.swing.JLabel lblDepartamento5;
     private javax.swing.JTable tblMatriz;
     private javax.swing.JTable tblTotal;
+    private javax.swing.JTable tblTotal1;
     // End of variables declaration//GEN-END:variables
 }
