@@ -5,6 +5,7 @@
  */
 package lab2a;
 
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,10 +16,11 @@ import javax.swing.table.DefaultTableModel;
      * totales por departamento
      */
 public class lab2 extends javax.swing.JFrame {
-     int iPreguntaMenu, iSueldoBase, iTotalDeducciones, iTotalPercepciones, iSueldoLiquido,iSumador, iRentaImponible;
-        double dValorIsr;
+     int iPreguntaMenu, iSueldoBase, iTotalDeducciones, iTotalPercepciones, iRentaImponible;
+        double dValorIsr, dSueldoLiquido,dSumador;
         String [][] sTotalDepartamento=new String[11][10];
-        int[] iTotales=new int[5];
+        double[] iTotales=new double[5];
+        DecimalFormat dfFormato=new DecimalFormat("0.00");
     /**
      * Creates new form lab2
      */
@@ -251,17 +253,17 @@ public void SueldoLiquido(){
                  iRentaImponible=(iSueldoBase+iTotalPercepciones)-iTotalDeducciones;
                  //enviamos la renta imponible para calcular el isr de cada trabajador
                  dValorIsr=fCalculoISR(iRentaImponible);
-                 sTotalDepartamento[i][7]=Integer.toString((int)(dValorIsr));
+                 sTotalDepartamento[i][7]=dfFormato.format(dValorIsr);
                  //enviamos sueldo,deducciones y percepciones a funcion para obtener el sueldo liquido
-                 iSueldoLiquido=fSueldoLiquido(iSueldoBase,(iTotalDeducciones+(int)(dValorIsr)),iTotalPercepciones);
+                 dSueldoLiquido=fSueldoLiquido(iSueldoBase,(iTotalDeducciones+dValorIsr),iTotalPercepciones);
                  //convertimos a string el valor del sueldo liquido para poder guardar en matriz
-                 sTotalDepartamento[i][8]=Integer.toString(iSueldoLiquido);
+                 sTotalDepartamento[i][8]=dfFormato.format(dSueldoLiquido);
             }
 }
- public static int fSueldoLiquido(int iSueldo,int iDeducciones,int iPercepciones){
+ public static double fSueldoLiquido(int iSueldo,double iDeducciones,int iPercepciones){
         //funcion para calculo el sueldo liquido de cada empleado
     
-     int iLiquido;
+     double iLiquido;
      //operamos
      iLiquido=(iSueldo+iPercepciones)-iDeducciones;
      //retornamos el valor
@@ -283,18 +285,18 @@ public void SueldoLiquido(){
           //ciclo for para llenar el vector itotales
             for (int i = 1; i <= 10; i++) {
                    //convertimos a entero el valor del sueldo liquido para poder operar
-                iSumador=Integer.parseInt(sTotalDepartamento[i][8]);
+                dSumador=Double.parseDouble(sTotalDepartamento[i][8]);
                 //segun el numero del departamento sumamos las cantidades del sueldo liquido
                 if (sTotalDepartamento[i][9].equals("1")) {
-                    iTotales[0]=iTotales[0]+iSumador;
+                    iTotales[0]=iTotales[0]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("2")) {
-                     iTotales[1]=iTotales[1]+iSumador;
+                     iTotales[1]=iTotales[1]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("3")) {
-                     iTotales[2]=iTotales[2]+iSumador;
+                     iTotales[2]=iTotales[2]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("4")) {
-                     iTotales[3]=iTotales[3]+iSumador;
+                     iTotales[3]=iTotales[3]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("5")) {
-                     iTotales[4]=iTotales[4]+iSumador;
+                     iTotales[4]=iTotales[4]+dSumador;
                              
                 }
             }
