@@ -16,9 +16,9 @@ import javax.swing.table.DefaultTableModel;
      * totales por departamento
      */
 public class lab2 extends javax.swing.JFrame {
-     int iPreguntaMenu, iSueldoBase, iTotalDeducciones, iTotalPercepciones, iRentaImponible;
-        double dValorIsr, dSueldoLiquido,dSumador;
-        String [][] sTotalDepartamento=new String[11][10];
+     int iPreguntaMenu, iSueldoBase, iTotalPercepciones;
+        double dValorIsr, dSueldoLiquido,dSumador,dValorIGSS,dTotalDeducciones;
+        String [][] sTotalDepartamento=new String[11][11];
         double[] iTotales=new double[5];
         DecimalFormat dfFormato=new DecimalFormat("0.00");
     /**
@@ -150,7 +150,7 @@ public class lab2 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -190,9 +190,9 @@ public class lab2 extends javax.swing.JFrame {
                                 .addComponent(lblDepartamento3)
                                 .addGap(28, 28, 28)
                                 .addComponent(lblDepartamento4)
-                                .addGap(5, 5, 5)
+                                .addGap(18, 18, 18)
                                 .addComponent(lblDepartamento5)
-                                .addGap(52, 52, 52)
+                                .addGap(39, 39, 39)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
@@ -210,10 +210,10 @@ public class lab2 extends javax.swing.JFrame {
                     sTotalDepartamento[i][1]=JOptionPane.showInputDialog("Ingrese el nombre del empleado #"+i);
                     sTotalDepartamento[i][2]=Integer.toString((int) (2000+(Math.random()*15000)));
                     sTotalDepartamento[i][3]=Integer.toString((int) (1000+(Math.random()*4000)));
-                    sTotalDepartamento[i][4]=Integer.toString((int) (1250+(Math.random()*5000)));
-                    sTotalDepartamento[i][5]=Integer.toString((int) (250+(Math.random()*750)));
+                    sTotalDepartamento[i][4]=Integer.toString((int) (1250+(Math.random()*5000)));                   
                     sTotalDepartamento[i][6]=Integer.toString((int) (250+(Math.random()*750)));
                     sTotalDepartamento[i][9]=Integer.toString((int)(1+(Math.random()*5)));
+                   sTotalDepartamento[i][10]=JOptionPane.showInputDialog("Al empleado se le calcula igss \n1.Si\n2.No");
             }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -229,7 +229,7 @@ public class lab2 extends javax.swing.JFrame {
      DefaultTableModel dftTablaModelo = new DefaultTableModel(new String[]{"Total por Departamento"}, 0); 
         for (int i = 0; i < 5; i++) {
             //creamos un objeto para que guarde cada numero del vector que son los totales por departamento
-            Object[] oTotales={iTotales[i]};             
+            Object[] oTotales={dfFormato.format(iTotales[i])};             
             //agregamos una fila a la tabla
             dftTablaModelo.addRow(oTotales);            
         }
@@ -272,25 +272,51 @@ public class lab2 extends javax.swing.JFrame {
 public void SueldoLiquido(){
         //ciclo for para obtener el sueldo liquido
             for (int i = 1; i <= 10; i++) {
-                    iSueldoBase=Integer.parseInt(sTotalDepartamento[i][2]);
-                 iTotalDeducciones=Integer.parseInt(sTotalDepartamento[i][5])+Integer.parseInt(sTotalDepartamento[i][6]);
-                 iTotalPercepciones=Integer.parseInt(sTotalDepartamento[i][4])+Integer.parseInt(sTotalDepartamento[i][3]);
-                 iRentaImponible=iSueldoBase;
-                 //enviamos la renta imponible para calcular el isr de cada trabajador
-                 dValorIsr=fCalculoISR(iRentaImponible);
+                 iSueldoBase=Integer.parseInt(sTotalDepartamento[i][2]);
+                 //enviamos a la funcion el sueldo y la opcion si es que se le puede calcular el igss
+                 dValorIGSS=fCalculoIGSS(iSueldoBase,sTotalDepartamento[i][10]);  
+                 //enviamos a la funcion el sueldo base para calcular el isr
+                 dValorIsr=fCalculoISR(iSueldoBase);
+                 //llamamos a la funcion para el calculo de deducciones
+                 dTotalDeducciones=fTotalDeducciones(dValorIGSS,Integer.parseInt(sTotalDepartamento[i][6]),dValorIsr);
+                 //llamamos a la funcion para el calculo de percepciones
+                 iTotalPercepciones=fTotalPercepciones(Integer.parseInt(sTotalDepartamento[i][4]),Integer.parseInt(sTotalDepartamento[i][3]));     
+                 sTotalDepartamento[i][5]=dfFormato.format(dValorIGSS);
                  sTotalDepartamento[i][7]=dfFormato.format(dValorIsr);
                  //enviamos sueldo,deducciones y percepciones a funcion para obtener el sueldo liquido
-                 dSueldoLiquido=fSueldoLiquido(iSueldoBase,(iTotalDeducciones+dValorIsr),iTotalPercepciones);
+                 dSueldoLiquido=fSueldoLiquido(iSueldoBase,dTotalDeducciones,  iTotalPercepciones);
                  //convertimos a string el valor del sueldo liquido para poder guardar en matriz
                  sTotalDepartamento[i][8]=dfFormato.format(dSueldoLiquido);
             }
 }
- public static double fSueldoLiquido(int iSueldo,double iDeducciones,int iPercepciones){
+public static int fTotalPercepciones(int iBonificacion, int iComisiones){
+    //funcion para calcular el total de percepciones del empleado
+    int iTotalPercepciones=0;
+    iTotalPercepciones=iBonificacion+iComisiones;
+  return iTotalPercepciones;  
+}
+public static double fTotalDeducciones(double dIGSS, int iDescuentosJudiciales,double dISR){
+    //funcion para calcular el total de deducciones del empleado
+    double dTotalDeducciones=0;
+    dTotalDeducciones=dIGSS+(double)(iDescuentosJudiciales)+dISR;
+    return dTotalDeducciones;
+}
+public static double fCalculoIGSS(int iSueldo,String sOpcion){
+    //funcion para verificar si al empleado se le puede calcular el igss
+    double dIGSS = 0;
+    if (sOpcion.equals("1")) {
+        dIGSS=iSueldo*0.0483;
+    }else if (sOpcion.equals("2")) {
+        dIGSS=0;
+    }
+    return dIGSS;
+}
+ public static double fSueldoLiquido(int iSueldo,double dDeducciones,int iPercepciones){
         //funcion para calculo el sueldo liquido de cada empleado
     
      double iLiquido;
      //operamos
-     iLiquido=(iSueldo+iPercepciones)-iDeducciones;
+     iLiquido=(iSueldo+iPercepciones)-dDeducciones;
      //retornamos el valor
      return iLiquido;
      
