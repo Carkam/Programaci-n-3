@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
   /**
      * Carlos Antonio Laib Contreras (0901-17-518)
-     * 03/02/2019
+     * 19/02/2019
      * Planilla que  calcula el sueldo liquido de los trabajadores mostrando los
      * totales por departamento
      */
@@ -54,6 +54,7 @@ public class lab2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnIngresar.setBackground(new java.awt.Color(255, 255, 51));
         btnIngresar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -62,6 +63,7 @@ public class lab2 extends javax.swing.JFrame {
             }
         });
 
+        btnMostrar.setBackground(new java.awt.Color(255, 255, 51));
         btnMostrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMostrar.setText("Mostrar");
         btnMostrar.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +72,7 @@ public class lab2 extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiar.setBackground(new java.awt.Color(255, 255, 51));
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +208,8 @@ public class lab2 extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         //ciclo for para llenar la matriz y pedir nombre de los empleados  
-        for (int i = 1; i <= 10; i++) {            
+        for (int i = 1; i <= 10; i++) {         
+            int iPreguntaIgss=0,iOpcionNoValida = 0;
                    sTotalDepartamento[i][0]=Integer.toString((int) (i));
                     sTotalDepartamento[i][1]=JOptionPane.showInputDialog("Ingrese el nombre del empleado #"+i);
                     sTotalDepartamento[i][2]=Integer.toString((int) (2000+(Math.random()*15000)));
@@ -213,7 +217,25 @@ public class lab2 extends javax.swing.JFrame {
                     sTotalDepartamento[i][4]=Integer.toString((int) (1250+(Math.random()*5000)));                   
                     sTotalDepartamento[i][6]=Integer.toString((int) (250+(Math.random()*750)));
                     sTotalDepartamento[i][9]=Integer.toString((int)(1+(Math.random()*5)));
-                   sTotalDepartamento[i][10]=JOptionPane.showInputDialog("Al empleado se le calcula igss \n1.Si\n2.No");
+                    //ciclo while para verificar si son las unicas dos opciones
+                   do {                       
+                       iOpcionNoValida=0;
+                       //pregunta si le quiere calcular el igss
+                        iPreguntaIgss=Integer.parseInt(JOptionPane.showInputDialog("Al empleado se le calcula igss \n1.Si\n2.No"));
+                        switch(iPreguntaIgss){
+                            case 1:
+                                 sTotalDepartamento[i][10]=String.valueOf(iPreguntaIgss);
+                                break;
+                              case 2:
+                                 sTotalDepartamento[i][10]=String.valueOf(iPreguntaIgss);
+                                break;
+                                //si la opcion es erronea vielve la variable iOpnoValida como 1
+                              default:JOptionPane.showMessageDialog(null, "Opcion Invalida");
+                              iOpcionNoValida=1;
+                              
+                        }
+                        //mientras iOpcionNoValida sea 1 se seguira repitiendo el ciclo
+                    } while ((iOpcionNoValida==1));                  
             }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
