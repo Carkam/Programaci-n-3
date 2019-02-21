@@ -16,10 +16,10 @@ import javax.swing.table.DefaultTableModel;
      * totales por departamento
      */
 public class lab2 extends javax.swing.JFrame {
-     int iPreguntaMenu, iSueldoBase, iTotalPercepciones;
+     int iSueldoBase, iTotalPercepciones;
         double dValorIsr, dSueldoLiquido,dSumador,dValorIGSS,dTotalDeducciones;
         String [][] sTotalDepartamento=new String[11][11];
-        double[] iTotales=new double[5];
+        double[] dTotales=new double[5];
         DecimalFormat dfFormato=new DecimalFormat("0.00");
     /**
      * Creates new form lab2
@@ -251,7 +251,7 @@ public class lab2 extends javax.swing.JFrame {
      DefaultTableModel dftTablaModelo = new DefaultTableModel(new String[]{"Total por Departamento"}, 0); 
         for (int i = 0; i < 5; i++) {
             //creamos un objeto para que guarde cada numero del vector que son los totales por departamento
-            Object[] oTotales={dfFormato.format(iTotales[i])};             
+            Object[] oTotales={dfFormato.format(dTotales[i])};             
             //agregamos una fila a la tabla
             dftTablaModelo.addRow(oTotales);            
         }
@@ -272,7 +272,7 @@ public class lab2 extends javax.swing.JFrame {
         }
         //limpiarmos el vector int iTotales
         for (int i = 0; i < 5; i++) {
-            iTotales[i]=0;
+            dTotales[i]=0;
         }
         //limpiamos la primera tabla, con una nueva variable obtenemos el modelo la tabla actualmente
         DefaultTableModel dftModeloLimpiador1 = (DefaultTableModel) tblMatriz.getModel(); 
@@ -306,9 +306,9 @@ public void SueldoLiquido(){
                  sTotalDepartamento[i][5]=dfFormato.format(dValorIGSS);
                  sTotalDepartamento[i][7]=dfFormato.format(dValorIsr);
                  //enviamos sueldo,deducciones y percepciones a funcion para obtener el sueldo liquido
-                 dSueldoLiquido=fSueldoLiquido(iSueldoBase,dTotalDeducciones,  iTotalPercepciones);
+                 dSueldoLiquido=fSueldoLiquido(iSueldoBase,dTotalDeducciones,iTotalPercepciones);
                  //convertimos a string el valor del sueldo liquido para poder guardar en matriz
-                 sTotalDepartamento[i][8]=dfFormato.format(dSueldoLiquido);
+                 sTotalDepartamento[i][8]=Double.toString(dSueldoLiquido);
             }
 }
 public static int fTotalPercepciones(int iBonificacion, int iComisiones){
@@ -363,15 +363,15 @@ public static double fCalculoIGSS(int iSueldo,String sOpcion){
                 dSumador=Double.parseDouble(sTotalDepartamento[i][8]);
                 //segun el numero del departamento sumamos las cantidades del sueldo liquido
                 if (sTotalDepartamento[i][9].equals("1")) {
-                    iTotales[0]=iTotales[0]+dSumador;
+                    dTotales[0]=dTotales[0]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("2")) {
-                     iTotales[1]=iTotales[1]+dSumador;
+                     dTotales[1]=dTotales[1]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("3")) {
-                     iTotales[2]=iTotales[2]+dSumador;
+                     dTotales[2]=dTotales[2]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("4")) {
-                     iTotales[3]=iTotales[3]+dSumador;
+                     dTotales[3]=dTotales[3]+dSumador;
                 }else if (sTotalDepartamento[i][9].equals("5")) {
-                     iTotales[4]=iTotales[4]+dSumador;
+                     dTotales[4]=dTotales[4]+dSumador;
                              
                 }
             }
