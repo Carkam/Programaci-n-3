@@ -11,9 +11,10 @@ import javax.swing.table.DefaultTableModel;
 
   /**
      * Carlos Antonio Laib Contreras (0901-17-518)
-     * 19/02/2019
+     * 21/02/2019
      * Planilla que  calcula el sueldo liquido de los trabajadores mostrando los
      * totales por departamento
+     * Grupo#1
      */
 public class lab2 extends javax.swing.JFrame {
      int iSueldoBase, iTotalPercepciones;
