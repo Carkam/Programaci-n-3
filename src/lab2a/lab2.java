@@ -295,7 +295,7 @@ public void SueldoLiquido(){
         //ciclo for para obtener el sueldo liquido
             for (int i = 1; i <= 10; i++) {
                  iSueldoBase=Integer.parseInt(sTotalDepartamento[i][2]);
-                 //enviamos a la funcion el sueldo y la opcion si es que se le puede calcular el igss
+                 //enviamos a la funcion el sueldo y la opcion si es que se le puede calcular el igss....
                  dValorIGSS=fCalculoIGSS(iSueldoBase,sTotalDepartamento[i][10]);  
                  //enviamos a la funcion el sueldo base para calcular el isr
                  dValorIsr=fCalculoISR(iSueldoBase);
