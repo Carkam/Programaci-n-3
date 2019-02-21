@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
      * 21/02/2019
      * Planilla que  calcula el sueldo liquido de los trabajadores mostrando los
      * totales por departamento
-     * Grupo#1
+     * Grupo#1 Presentacion
      */
 public class lab2 extends javax.swing.JFrame {
      int iSueldoBase, iTotalPercepciones;
