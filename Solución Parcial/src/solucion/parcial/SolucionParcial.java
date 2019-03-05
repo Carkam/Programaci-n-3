@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *Carlos Antonio Laib Contreras
  * 0901-17-518
- * Variante A
+ * Variante B
  */
 //El siguiente programa es para calcular la la nota promedio de la clase y enseñar la nota y si aprobro o no cada alumno
 public class SolucionParcial {   
