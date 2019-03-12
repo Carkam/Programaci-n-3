@@ -407,7 +407,8 @@ public static double fCalculoIGSS(int iSueldo,String sOpcion){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new lab2().setVisible(true);
+                new Usuario().setVisible(true);
+                
             }
         });
     }
