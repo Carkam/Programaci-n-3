@@ -56,12 +56,12 @@
                   <Component id="txtusuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="txtcontraseña" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtcontraseña" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnaceptar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnagregar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -73,8 +73,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtusuario">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtcontrase&#xf1;a">
     </Component>
     <Component class="javax.swing.JButton" name="btnaceptar">
       <Properties>
@@ -101,6 +99,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtcontrase&#xf1;a">
     </Component>
   </SubComponents>
 </Form>
