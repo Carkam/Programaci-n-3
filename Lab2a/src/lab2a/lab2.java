@@ -5,7 +5,13 @@
  */
 package lab2a;
 
+import java.awt.event.ItemEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DecimalFormat;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
      * Grupo#1 Presentacion
      */
 public class lab2 extends javax.swing.JFrame {
+    String sFechaInicial,sFechaFinal,sCodigoNominaEncabezado;
+    int iCodigoEmpleadoNomina, iCodigoConceptoNomina;
      int iSueldoBase, iTotalPercepciones;
         double dValorIsr, dSueldoLiquido,dSumador,dValorIGSS,dTotalDeducciones;
         String [][] sTotalDepartamento=new String[11][11];
@@ -27,8 +35,30 @@ public class lab2 extends javax.swing.JFrame {
      */
     public lab2() {
         initComponents();
+        funNominaEncabezado();
     }
-
+public void funNominaEncabezado(){
+      try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT * FROM nominaencabezado");                 
+            ResultSet rs = pst.executeQuery(); 
+            boolean bSiguiente=rs.next();
+            while(bSiguiente){ 
+                this.cmbFechaNominaEncabezado.addItem(rs.getString("fecha_inicial_nomina")+" al "+rs.getString("fecha_final_nomina"));
+               bSiguiente=rs.next();
+            }            
+            cn.close();
+        }catch (Exception e){
+            System.out.println("gg"+ e);
+        }
+}
+public void funTokensFecha(){
+     StringTokenizer stToken=new StringTokenizer((String) cmbFechaNominaEncabezado.getSelectedItem()," al ");        
+        while(stToken.hasMoreTokens()){
+        sFechaInicial=stToken.nextToken();
+        sFechaFinal=stToken.nextToken();
+        }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +82,9 @@ public class lab2 extends javax.swing.JFrame {
         lblDepartamento5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTotal1 = new javax.swing.JTable();
+        cmbFechaNominaEncabezado = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        btnMostrarNomina = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,13 +117,13 @@ public class lab2 extends javax.swing.JFrame {
 
         tblMatriz.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codigol", "Nombre Empleado", "Sueldo Base", "Bonificación", "Comisiones", "IGSS", "Descuentos Judiciales", "ISR", "Sueldo Liquido", "Departamento"
+                "Nombre Empleado", "Sueldo Base", "Bonificación", "Comisiones", "IGSS", "Descuentos Judiciales", "ISR", "Sueldo Liquido", "Departamento"
             }
         ));
         jScrollPane1.setViewportView(tblMatriz);
@@ -140,18 +173,30 @@ public class lab2 extends javax.swing.JFrame {
         tblTotal1.setRowHeight(40);
         jScrollPane3.setViewportView(tblTotal1);
 
+        cmbFechaNominaEncabezado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbFechaNominaEncabezadoItemStateChanged(evt);
+            }
+        });
+        cmbFechaNominaEncabezado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFechaNominaEncabezadoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Nomina de la fecha : ");
+
+        btnMostrarNomina.setText("Mostrar");
+        btnMostrarNomina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarNominaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(btnIngresar)
-                .addGap(94, 94, 94)
-                .addComponent(btnMostrar)
-                .addGap(112, 112, 112)
-                .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
@@ -170,13 +215,34 @@ public class lab2 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnIngresar)
+                        .addGap(94, 94, 94)
+                        .addComponent(btnMostrar)
+                        .addGap(112, 112, 112)
+                        .addComponent(btnLimpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(49, 49, 49)
+                        .addComponent(cmbFechaNominaEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnMostrarNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbFechaNominaEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnMostrarNomina))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnIngresar)
                             .addComponent(btnMostrar)
@@ -199,9 +265,9 @@ public class lab2 extends javax.swing.JFrame {
                                 .addGap(39, 39, 39)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
+                        .addGap(17, 17, 17)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -292,6 +358,94 @@ public class lab2 extends javax.swing.JFrame {
                 dftModeloLimpiador2.removeRow(0);
             }
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void cmbFechaNominaEncabezadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFechaNominaEncabezadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFechaNominaEncabezadoActionPerformed
+
+    private void cmbFechaNominaEncabezadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbFechaNominaEncabezadoItemStateChanged
+          if (evt.getStateChange()==ItemEvent.SELECTED) {
+             funTokensFecha();
+         try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT nomicodigo FROM nominaencabezado WHERE fecha_inicial_nomina=?");    
+            pst.setString(1, sFechaInicial);
+            ResultSet rs = pst.executeQuery(); 
+            if(rs.next()){
+               sCodigoNominaEncabezado=rs.getString("nomicodigo");                
+            }                      
+            cn.close();
+        }catch (Exception e){
+            System.out.println("gg"+ e);
+        }  
+        } 
+    }//GEN-LAST:event_cmbFechaNominaEncabezadoItemStateChanged
+public void funcodigos(){
+       try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT empcodigo, concodigo FROM nominadetalles WHERE nomicodigo=1 ORDER BY nomicodigo DESC");                 
+            ResultSet rs = pst.executeQuery();         
+            if(rs.next()){ 
+                iCodigoEmpleadoNomina=Integer.parseInt(rs.getString(1));          
+                iCodigoConceptoNomina=Integer.parseInt(rs.getString(2));                         
+            }            
+            cn.close();
+        }catch (Exception e){
+            System.out.println("gg"+ e);
+        }
+}
+    private void btnMostrarNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarNominaActionPerformed
+          DefaultTableModel modelo=new DefaultTableModel();
+          modelo.setColumnIdentifiers(new Object[]{"Nombre Empleado","Sueldo Base","Bonificación","Comisiones","IGSS","Descuentos Judiciales","ISR","Sueldo Liquido","Departamento"});   
+          funcodigos();     
+         double[] dAgregarATabla;
+          for (int i = 1; i <= iCodigoEmpleadoNomina ; i++) {
+               try{
+                        Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+                        PreparedStatement pst = cn.prepareStatement("SELECT empleados.empnombre, departamentos.depnombre FROM empleados, departamentos WHERE empleados.depcodigo=departamentos.depcodigo and empleados.empcodigo=?");    
+                         pst.setString(1, Integer.toString(i));                   
+                         ResultSet rs = pst.executeQuery(); 
+                         if (rs.next()) {  
+                             tblMatriz.setValueAt(rs.getString("empleados.empnombre"), (i-1), 0);
+                             tblMatriz.setValueAt(rs.getString("departamentos.depnombre"), (i-1), 8);                                                 
+                         }
+     
+                         cn.close();
+                    }catch (Exception e){
+                        System.out.println("gg"+ e);
+                     } 
+               //
+             dAgregarATabla=new double[7];
+              for (int j = 1; j <= iCodigoConceptoNomina; j++) {              
+                     try{
+                        Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+                        PreparedStatement pst = cn.prepareStatement("SELECT nomidtotal FROM nominadetalles WHERE empcodigo=? and concodigo=?");    
+                         pst.setString(1, Integer.toString(i));
+                         pst.setString(2, Integer.toString(j));
+                         ResultSet rs = pst.executeQuery(); 
+                         if (rs.next()) {   
+                             
+                             dAgregarATabla[j]=Double.parseDouble(rs.getString("nomidtotal"));                           
+                             System.out.println(dAgregarATabla[j]+" "+j);                                                          
+                         }else{
+                             dAgregarATabla[j]=0;
+                              System.out.println(dAgregarATabla[j]+" "+j);  
+                         }
+     
+                         cn.close();
+                    }catch (Exception e){
+                        System.out.println("gg"+ e);
+                     }        
+              }
+              System.out.println(dAgregarATabla[2]);  
+                tblMatriz.setValueAt(dAgregarATabla[1], (i-1), 2);
+                tblMatriz.setValueAt(dAgregarATabla[2], (i-1), 4);
+                tblMatriz.setValueAt(dAgregarATabla[3], (i-1), 1);
+                tblMatriz.setValueAt(dAgregarATabla[4], (i-1), 6);
+                tblMatriz.setValueAt(dAgregarATabla[5], (i-1), 3);
+                tblMatriz.setValueAt(dAgregarATabla[6], (i-1), 5);
+            }
+    }//GEN-LAST:event_btnMostrarNominaActionPerformed
 public void SueldoLiquido(){
         //ciclo for para obtener el sueldo liquido
             for (int i = 1; i <= 10; i++) {
@@ -417,6 +571,9 @@ public static double fCalculoIGSS(int iSueldo,String sOpcion){
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnMostrar;
+    private javax.swing.JButton btnMostrarNomina;
+    private javax.swing.JComboBox<String> cmbFechaNominaEncabezado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

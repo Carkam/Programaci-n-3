@@ -8,13 +8,14 @@ package lab2a;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
  * @author KAMINATOR
  */
 public class IngresarUsuario extends javax.swing.JFrame {
-int iEstatus;
+int iCodigo=1;
     /**
      * Creates new form IngresarUsuario
      */
@@ -35,12 +36,10 @@ int iEstatus;
         txtusuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtregresar = new javax.swing.JButton();
-        chkEstatus = new javax.swing.JCheckBox();
         txtcontraseña = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnregistrar.setText("Registrar");
         btnregistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -53,8 +52,6 @@ int iEstatus;
 
         jLabel2.setText("Contraseña");
 
-        jLabel3.setText("Estatus");
-
         txtregresar.setText("Regresar");
         txtregresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,36 +59,26 @@ int iEstatus;
             }
         });
 
-        chkEstatus.setText("Activo");
-
-        txtcontraseña.setText("jPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(btnregistrar)
-                        .addGap(57, 57, 57)
-                        .addComponent(txtregresar))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(chkEstatus))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                    .addComponent(txtcontraseña))))))
+                            .addComponent(jLabel2))
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(txtcontraseña)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(btnregistrar)
+                        .addGap(57, 57, 57)
+                        .addComponent(txtregresar)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,15 +92,11 @@ int iEstatus;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(chkEstatus))
-                .addGap(40, 40, 40)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnregistrar)
                     .addComponent(txtregresar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
@@ -121,15 +104,16 @@ int iEstatus;
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
         //mandamos a llamar a la funcion estatus
-        funEstatus();
+       codigo();
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
-            PreparedStatement pst = cn.prepareStatement("insert into usuarios values(?,?,?,?)");
+            PreparedStatement pst = cn.prepareStatement("insert into usuarios values(?,?,?,?,?)");
             
-            pst.setString(1, "0");
+            pst.setString(1, Integer.toString(iCodigo));
             pst.setString(2, txtusuario.getText().trim());
             pst.setString(3, txtcontraseña.getText().trim());            
-            pst.setString(4, Integer.toHexString(iEstatus));
+            pst.setString(4, Integer.toString(1));
+            pst.setString(5, Integer.toString(1));
             pst.executeUpdate();
             
             txtusuario.setText("");
@@ -138,13 +122,23 @@ int iEstatus;
             System.out.println("gg");
         }
     }//GEN-LAST:event_btnregistrarActionPerformed
-public void funEstatus(){
-    //dependiendo de si el checkbox esta seleccionado marca 1  o 0 para su estatus
-    if (chkEstatus.isSelected()) {
-        iEstatus=1;
-    }else{
-        iEstatus=0;
-    }
+public void codigo(){
+            try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT * FROM usuarios ORDER BY codigo_usuario DESC");                 
+            ResultSet rs = pst.executeQuery();         
+            if(rs.next()){ 
+                int iCodigoObtenido=Integer.parseInt(rs.getString(1));  
+                if (iCodigoObtenido==0) {
+                    iCodigo=1;
+                }else{
+                    iCodigo=iCodigoObtenido+1;
+                }              
+            }            
+            cn.close();
+        }catch (Exception e){
+            System.out.println("gg"+ e);
+        }
 }
     private void txtregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtregresarActionPerformed
          this.dispose();
@@ -187,10 +181,8 @@ public void funEstatus(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnregistrar;
-    private javax.swing.JCheckBox chkEstatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtcontraseña;
     private javax.swing.JButton txtregresar;
     private javax.swing.JTextField txtusuario;

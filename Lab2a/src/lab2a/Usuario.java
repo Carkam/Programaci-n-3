@@ -42,6 +42,7 @@ public class Usuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnaceptar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnaceptar.setText("Aceptar");
         btnaceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,6 +50,7 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
+        btnagregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnagregar.setText("Agregar");
         btnagregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,8 +58,10 @@ public class Usuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Usuario");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Contraseña");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -65,27 +69,27 @@ public class Usuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                             .addComponent(txtcontraseña)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(29, 29, 29)
                         .addComponent(btnaceptar)
                         .addGap(81, 81, 81)
                         .addComponent(btnagregar)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -97,33 +101,34 @@ public class Usuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnaceptar)
                     .addComponent(btnagregar))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-         new IngresarUsuario().setVisible(true);
+         new IngresarUsuario().setVisible(true);        
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void btnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarActionPerformed
               try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
-            PreparedStatement pst = cn.prepareStatement("select * from usuarios where NombreUsuario= ? and ClaveUsuario=? and EstatusUsuario=1");
+            PreparedStatement pst = cn.prepareStatement("select * from usuarios where nombre_usuario= ? and clave_usuario=? and estado_usuario=1");
             pst.setString(1, txtusuario.getText().trim());
             pst.setString(2, txtcontraseña.getText().trim());         
             ResultSet rs = pst.executeQuery();
             
             if(rs.next()){
                 //mandamos a llamar el frame de lab 2 donde se encuentra la planilla
-                  new lab2().setVisible(true);
+                  new Menu().setVisible(true);
+                  
                   //liberamos memoria al ceerar la ventana de usuario
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario Invalido");
             }
-            
+            cn.close();
         }catch (Exception e){
              JOptionPane.showMessageDialog(null, "Error "+e);
         }
