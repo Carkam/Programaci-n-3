@@ -79,6 +79,12 @@ public void funDepartamento(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        txtSueldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSueldoActionPerformed(evt);
+            }
+        });
+
         cmbDepartamento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDepartamentoItemStateChanged(evt);
@@ -204,6 +210,10 @@ public void funDepartamento(){
             funConsulta();
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtSueldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSueldoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSueldoActionPerformed
 public void codigo(){
             try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");

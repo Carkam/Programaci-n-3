@@ -53,12 +53,50 @@ public void funFechaFinal(){
             ResultSet rs = pst.executeQuery(); 
             if(rs.next()){
                sFechaInicial=rs.getString("fecha_final_nomina");  
-               lblFechaIncial.setText(sFechaInicial);
+              funNuevafecha();
             }                      
             cn.close();
         }catch (Exception e){
             System.out.println("gg"+ e);
         }
+}
+public void funNuevafecha(){
+    int iDias = 0,iMeses=0,iAños=0;
+    String sDias,sMeses;
+         StringTokenizer stTokens=new StringTokenizer(sFechaInicial,"-");        
+        while(stTokens.hasMoreTokens()){
+        iAños=Integer.parseInt(stTokens.nextToken());
+        iMeses=Integer.parseInt(stTokens.nextToken());
+        iDias=Integer.parseInt(stTokens.nextToken());
+        }
+        
+       if ((iDias==31 && iMeses==1)|| (iDias==31 && iMeses==3)||(iDias==31 && iMeses==5)||(iDias==31 && iMeses==7)||(iDias==31 && iMeses==8)||(iDias==31 && iMeses==10)|| (iDias==31 && iMeses==12)) {           
+            iDias=iDias-30;            
+            if (iMeses==12) {
+               iMeses=iMeses-11;
+               iAños++;
+           }
+       }else if ((iDias==30 && iMeses==4)||(iDias==30 && iMeses==6)||(iDias==30 && iMeses==9)||(iDias==30 && iMeses==11)) {
+           iDias=iDias-29;
+           iMeses=iMeses+1;           
+       }else if ((iDias==29)&&(iMeses==2)) {
+        iDias=iDias-28;
+        iMeses=iMeses+1; 
+        }else if (iDias==28 && iMeses==2) {
+         iDias=iDias-27;
+        iMeses=iMeses+1;
+    }
+       if (iDias<10) {
+           sDias="0"+iDias;
+        }else{
+           sDias=Integer.toString(iDias);
+       }
+       if (iMeses<10) {
+        sMeses="0"+iMeses;
+      }else{
+           sMeses=Integer.toString(iMeses);
+       }
+        lblFechaIncial.setText(iAños+"-"+sMeses+"-"+sDias);  
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,6 +131,7 @@ public void funFechaFinal(){
             }
         });
 
+        lblFechaIncial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblFechaIncial.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,7 +186,7 @@ public void funCOnsulta(){
                 PreparedStatement pst = cn.prepareStatement("insert into nominaencabezado values(?,?,?,?)");
 
                 pst.setString(1, Integer.toString(iCodigo));
-                pst.setString(2, sFechaInicial);
+                pst.setString(2, lblFechaIncial.getText());
                 pst.setString(3, sdfFormat.format(jDateChooser2.getDate()));
                 pst.setString(4, Integer.toString(0));
                 pst.executeUpdate();            
@@ -159,7 +198,8 @@ public void funCOnsulta(){
             }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       StringTokenizer stTokens=new StringTokenizer(sFechaInicial,"-");        
+       String sFecha=lblFechaIncial.getText();
+        StringTokenizer stTokens=new StringTokenizer(sFecha,"-");        
         while(stTokens.hasMoreTokens()){
         iAño=Integer.parseInt(stTokens.nextToken());
         iMes=Integer.parseInt(stTokens.nextToken());
@@ -171,10 +211,13 @@ public void funCOnsulta(){
         iMesActual=Integer.parseInt(stToken.nextToken());
         iDiaActual=Integer.parseInt(stToken.nextToken());
         }
-        if ((iDiaActual<=iDia)&&(iMesActual<=iMes)&&(iAñoActual<=iAño)) {
+        if (((iDiaActual<=(iDia+1))&&(iMesActual<=iMes)&&(iAñoActual<=iAño))||((iDiaActual>=(iDia+1))&&(iMesActual<iMes)&&(iAñoActual<=iAño))) {
             JOptionPane.showMessageDialog(null,"La fecha Final no puede ser antes o igual a la fecha inicial");
         }else{
             funCOnsulta();
+            JOptionPane.showMessageDialog(null,"Nueva Nomina Creada");
+            codigo();
+        funFechaFinal();
         }
       
     }//GEN-LAST:event_jButton1ActionPerformed
