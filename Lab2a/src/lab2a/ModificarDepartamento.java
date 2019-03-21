@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,7 +37,7 @@ public void funDepartamento(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los departamentos"+ e);
         }
 }
     /**
@@ -126,7 +127,7 @@ public void funDepartamento(){
                 }
                 cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del departamento"+ e);
             }
         }
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
@@ -137,11 +138,12 @@ public void funDepartamento(){
             PreparedStatement pst = cn.prepareStatement("update departamentos set depnombre = ? where depcodigo = " + sCodigoDepartamento);
             pst.setString(1, txtDepartamento.getText().trim());
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Modificacion de datos Exitoso");
             txtDepartamento.setText("");
             cmbDepartamento.removeAllItems();
             funDepartamento();
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Error no se puede modificar la informacion"+ e);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

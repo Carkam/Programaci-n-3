@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,7 +37,7 @@ public void funPuesto(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los puestos"+ e);
         }
 }
     /**
@@ -122,7 +123,7 @@ public void funPuesto(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del codigo"+ e);
         } 
         }
     }//GEN-LAST:event_cmbPuestoItemStateChanged
@@ -134,10 +135,11 @@ public void funPuesto(){
             pst.setString(1, txtPuesto.getText().trim());          
             pst.executeUpdate();  
             txtPuesto.setText("");
+            JOptionPane.showMessageDialog(null,"Modificacion de datos Exitoso");
             cmbPuesto.removeAllItems();
             funPuesto();
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Error no se puede modificar la informacion"+ e);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

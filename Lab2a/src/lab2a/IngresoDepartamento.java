@@ -94,11 +94,12 @@ int iCodigo=1;
                 pst.setString(2, txtDepartamento.getText().trim());
                 pst.setString(3, Integer.toString(1));
                 pst.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso");
                 txtDepartamento.setText("");
                    iCodigo=1;
                 cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede ingresar la informacion"+ e);
             }
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -113,7 +114,7 @@ public void codigo(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo "+ e);
         }
 }
     /**

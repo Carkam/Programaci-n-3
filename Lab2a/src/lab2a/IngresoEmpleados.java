@@ -39,7 +39,7 @@ public void funPuesto(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre del puesto"+ e);
         }
 }
 public void funDepartamento(){
@@ -54,7 +54,7 @@ public void funDepartamento(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre de los departamentos"+ e);
         }
 }
 
@@ -177,7 +177,7 @@ public void funDepartamento(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del departamento"+ e);
         }
          }
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
@@ -195,7 +195,7 @@ public void funDepartamento(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del puesto"+ e);
         }
        }
     }//GEN-LAST:event_cmbPuestoItemStateChanged
@@ -225,7 +225,7 @@ public void codigo(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo "+ e);
         }
 }
 public void funConsulta(){
@@ -239,13 +239,14 @@ public void funConsulta(){
                 pst.setString(4, sCodigoDepartamento);
                 pst.setString(5, sCodigoPuesto);
                 pst.setString(6, Integer.toString(1));
-                pst.executeUpdate();            
+                pst.executeUpdate();  
+                JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso");
                 txtNombreEmp.setText("");  
                 txtSueldo.setText("");
                 iCodigo=1;
             cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede ingresar la informacion"+ e);
             }
 }
     /**

@@ -42,7 +42,7 @@ public void codigo(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo"+ e);
         }
 }
 public void funFechaFinal(){
@@ -57,7 +57,7 @@ public void funFechaFinal(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener la fehca final de la nomina anterior"+ e);
         }
 }
 public void funNuevafecha(){
@@ -71,7 +71,8 @@ public void funNuevafecha(){
         }
         
        if ((iDias==31 && iMeses==1)|| (iDias==31 && iMeses==3)||(iDias==31 && iMeses==5)||(iDias==31 && iMeses==7)||(iDias==31 && iMeses==8)||(iDias==31 && iMeses==10)|| (iDias==31 && iMeses==12)) {           
-            iDias=iDias-30;            
+            iDias=iDias-30; 
+            iMeses=iMeses+1;
             if (iMeses==12) {
                iMeses=iMeses-11;
                iAños++;
@@ -190,11 +191,11 @@ public void funCOnsulta(){
                 pst.setString(3, sdfFormat.format(jDateChooser2.getDate()));
                 pst.setString(4, Integer.toString(0));
                 pst.executeUpdate();            
-                
+                JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso");
                 iCodigo=1;
             cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+               JOptionPane.showMessageDialog(null,"Error no se puede ingresar la informacion"+ e);
             }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -217,7 +218,7 @@ public void funCOnsulta(){
             funCOnsulta();
             JOptionPane.showMessageDialog(null,"Nueva Nomina Creada");
             codigo();
-        funFechaFinal();
+            funFechaFinal();
         }
       
     }//GEN-LAST:event_jButton1ActionPerformed

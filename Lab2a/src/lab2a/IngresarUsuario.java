@@ -5,10 +5,12 @@
  */
 package lab2a;
 
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +18,13 @@ import java.sql.ResultSet;
  */
 public class IngresarUsuario extends javax.swing.JFrame {
 int iCodigo=1;
+String sCodigoEmpleado;
     /**
      * Creates new form IngresarUsuario
      */
     public IngresarUsuario() {
         initComponents();
+        funNombreEmpleados();
     }
 
     /**
@@ -38,6 +42,8 @@ int iCodigo=1;
         jLabel2 = new javax.swing.JLabel();
         txtregresar = new javax.swing.JButton();
         txtcontraseña = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        cmbEmpleado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,6 +65,14 @@ int iCodigo=1;
             }
         });
 
+        jLabel3.setText("Empleado");
+
+        cmbEmpleado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbEmpleadoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,15 +83,17 @@ int iCodigo=1;
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                            .addComponent(txtcontraseña)))
+                            .addComponent(txtcontraseña)
+                            .addComponent(cmbEmpleado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
+                        .addGap(74, 74, 74)
                         .addComponent(btnregistrar)
-                        .addGap(57, 57, 57)
+                        .addGap(63, 63, 63)
                         .addComponent(txtregresar)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
@@ -92,16 +108,34 @@ int iCodigo=1;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnregistrar)
                     .addComponent(txtregresar))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void funNombreEmpleados(){
+      try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT * FROM empleados");                 
+            ResultSet rs = pst.executeQuery(); 
+            boolean bSiguiente=rs.next();
+            while(bSiguiente){ 
+                this.cmbEmpleado.addItem(rs.getString("empnombre"));
+                bSiguiente=rs.next();
+            }            
+            cn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los empleados"+ e);
+        }
+}
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
         //mandamos a llamar a la funcion estatus
        codigo();
@@ -113,13 +147,13 @@ int iCodigo=1;
             pst.setString(2, txtusuario.getText().trim());
             pst.setString(3, txtcontraseña.getText().trim());            
             pst.setString(4, Integer.toString(1));
-            pst.setString(5, Integer.toString(1));
+            pst.setString(5, sCodigoEmpleado);
             pst.executeUpdate();
-            
+            JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso");
             txtusuario.setText("");
             txtcontraseña.setText("");          
         }catch (Exception e){
-            System.out.println("gg");
+            JOptionPane.showMessageDialog(null,"Error no se puede guardar"+ e);
         }
     }//GEN-LAST:event_btnregistrarActionPerformed
 public void codigo(){
@@ -137,12 +171,29 @@ public void codigo(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo "+ e);
         }
 }
     private void txtregresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtregresarActionPerformed
          this.dispose();
     }//GEN-LAST:event_txtregresarActionPerformed
+
+    private void cmbEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEmpleadoItemStateChanged
+        if (evt.getStateChange()==ItemEvent.SELECTED) {  
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+            PreparedStatement pst = cn.prepareStatement("SELECT empcodigo FROM empleados WHERE empnombre=?");    
+            pst.setString(1, (String)cmbEmpleado.getSelectedItem());
+            ResultSet rs = pst.executeQuery(); 
+            if(rs.next()){
+               sCodigoEmpleado=rs.getString("empcodigo");                  
+            }                      
+            cn.close();
+        }catch (Exception e){
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del empleado"+ e);
+        }
+         }
+    }//GEN-LAST:event_cmbEmpleadoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -181,8 +232,10 @@ public void codigo(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnregistrar;
+    private javax.swing.JComboBox<String> cmbEmpleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtcontraseña;
     private javax.swing.JButton txtregresar;
     private javax.swing.JTextField txtusuario;

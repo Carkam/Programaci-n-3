@@ -45,7 +45,7 @@ public void funNominaEncabezado(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se pueden obtener las fechas"+ e);
         }
 }
 public void funEmpleado(){
@@ -60,7 +60,7 @@ public void funEmpleado(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre de los empleados"+ e);
         }
 }
 public void funConcepto(){
@@ -75,7 +75,7 @@ public void funConcepto(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre del concepto"+ e);
         }
 }
 public void funTokensFecha(){
@@ -189,7 +189,7 @@ public void funTokensFecha(){
                         .addComponent(jLabel4)
                         .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(btnAñadir)
+                .addComponent(btnAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -217,10 +217,10 @@ public void funConsultaNominaDetalles(){
                 pst.setString(3, sCodigoConcepto);
                 pst.setString(4, txtMonto.getText().trim());
                 pst.executeUpdate();           
-                 
+                JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso en Nomina detalles"); 
             cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede ingresar la informacion"+ e);
             }
 }
 public void funConsultaNominaEncabezado(){
@@ -230,8 +230,9 @@ public void funConsultaNominaEncabezado(){
             pst.setString(1, Double.toString(dValorNominaEncabezado));          
             pst.executeUpdate();  
              txtMonto.setText("");
+             JOptionPane.showMessageDialog(null,"IMOdificaciondel monto existo");
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Error no se puede modificar el monto de la nomina"+ e);
         }
 }
 public void CalculoMontoNominaEncabezado(){
@@ -253,12 +254,11 @@ if (sEfecto.equals("+")) {
             ResultSet rs = pst.executeQuery(); 
             if(rs.next()){
                sCodigoNominaEncabezado=rs.getString("nomicodigo"); 
-               dValorNominaEncabezado=Double.parseDouble(rs.getString("nomimonto"));
-               System.out.println(dValorNominaEncabezado);
+               dValorNominaEncabezado=Double.parseDouble(rs.getString("nomimonto"));               
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los codigos"+ e);
         }  
         }     
     }//GEN-LAST:event_cmbNominaEncabezadoItemStateChanged
@@ -274,7 +274,7 @@ public void funCodigoSueldoEmpleado(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("Error"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre y sueldo del empleado"+ e);
         }  
 }
     private void cmbEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEmpleadoItemStateChanged
@@ -329,7 +329,7 @@ public double funCalculoISR(double dSueldoBase){
                  }            
                 cn.close();
         }catch (Exception e){
-             System.out.println("ggg"+ e);
+             JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo y efecto del concepto"+ e);
         }
         //          
         if (cmbConcepto.getSelectedItem().equals("Sueldo")) {            

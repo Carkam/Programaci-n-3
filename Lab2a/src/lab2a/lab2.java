@@ -46,7 +46,7 @@ public void funNominaEncabezado(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener las fechas"+ e);
         }
 }
 public void funTokensFecha(){
@@ -75,6 +75,8 @@ public void funTokensFecha(){
         cmbFechaNominaEncabezado = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnMostrarNomina = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblTotalNomina = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,6 +144,11 @@ public void funTokensFecha(){
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Total Nomina");
+
+        lblTotalNomina.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,16 +161,19 @@ public void funTokensFecha(){
                         .addGap(49, 49, 49)
                         .addComponent(cmbFechaNominaEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
-                        .addComponent(btnMostrarNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnMostrarNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 819, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(61, 61, 61)
+                                .addComponent(lblTotalNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(87, 87, 87)))))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
@@ -177,12 +187,19 @@ public void funTokensFecha(){
                     .addComponent(jLabel1)
                     .addComponent(btnMostrarNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblTotalNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(125, 125, 125))))
         );
 
         pack();
@@ -201,12 +218,11 @@ public void funTokensFecha(){
             pst.setString(1, sFechaInicial);
             ResultSet rs = pst.executeQuery(); 
             if(rs.next()){
-               sCodigoNominaEncabezado=rs.getString("nomicodigo");  
-               System.out.println(sCodigoNominaEncabezado);
+               sCodigoNominaEncabezado=rs.getString("nomicodigo");              
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo de la nomina encabezado"+ e);
         }  
         } 
     }//GEN-LAST:event_cmbFechaNominaEncabezadoItemStateChanged
@@ -216,12 +232,12 @@ public void funcodigosEmpleados(){
             PreparedStatement pst = cn.prepareStatement("SELECT empcodigo FROM nominadetalles WHERE nomicodigo="+sCodigoNominaEncabezado+" ORDER BY nomicodigo DESC"); 
             ResultSet rs = pst.executeQuery();         
             if(rs.next()){ 
-                iCodigoEmpleadoNomina=Integer.parseInt(rs.getString("empcodigo"));          
-               System.out.println(iCodigoEmpleadoNomina+"detalle");                        
+                iCodigoEmpleadoNomina=Integer.parseInt(rs.getString("empcodigo")); 
+                
             }           
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del empleado"+ e);
         }
 }
 public void funCodigosConceptos(){
@@ -230,30 +246,28 @@ public void funCodigosConceptos(){
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM concepto  ORDER BY concodigo DESC");            
             ResultSet rs = pst.executeQuery();         
             if(rs.next()){                      
-                iCodigoConceptoNomina=Integer.parseInt(rs.getString(1)); 
-                System.out.println(iCodigoConceptoNomina);
+                iCodigoConceptoNomina=Integer.parseInt(rs.getString(1));                 
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("Errrror"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del concepto"+ e);
         } 
 }
 public void funNombreEmpleadosDepartamento(int iComienzo){
      
     try{
                         Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
-                        PreparedStatement pst = cn.prepareStatement("SELECT empleados.empnombre, departamentos.depnombre FROM empleados, departamentos, nominaencabezado,nominadetalles WHERE empleados.depcodigo=departamentos.depcodigo AND nominadetalles.empcodigo=empleados.empcodigo AND nominaencabezado.nomicodigo=nominadetalles.nomicodigo AND empleados.empcodigo="+iComienzo+"");    
+                        PreparedStatement pst = cn.prepareStatement("SELECT empleados.empnombre, departamentos.depnombre FROM empleados, departamentos, nominaencabezado,nominadetalles WHERE empleados.depcodigo=departamentos.depcodigo AND nominadetalles.empcodigo=empleados.empcodigo AND nominaencabezado.nomicodigo=nominadetalles.nomicodigo AND empleados.empcodigo="+iComienzo+" AND nominaencabezado.nomicodigo="+sCodigoNominaEncabezado+"");    
                                            
                          ResultSet rs = pst.executeQuery(); 
-                         if (rs.next()) {
-                             System.out.println(rs.getString("empleados.empnombre"));
+                         if (rs.next()) { 
+                             
                              tblMatriz.setValueAt(rs.getString("empleados.empnombre"), (iComienzo-1), 0);
                              tblMatriz.setValueAt(rs.getString("departamentos.depnombre"), (iComienzo-1), 8);                                                 
-                         }
-     
+                         }     
                          cn.close();
                     }catch (Exception e){
-                        System.out.println("Errror"+ e);
+                        JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre y departamento del empleado"+ e);
                      } 
 }
 public void funMontoConcepto(int iComienzo,int iComienzoDetalle, double dAgregarATabla[],String sEfecto[]){
@@ -266,8 +280,7 @@ public void funMontoConcepto(int iComienzo,int iComienzoDetalle, double dAgregar
                          if (rs.next()) {                            
                              dAgregarATabla[iComienzoDetalle]=Double.parseDouble(rs.getString("nominadetalles.nomidtotal")); 
                              sEfecto[iComienzoDetalle]=rs.getString("concepto.conefecto");                                                        
-                         }else{
-                             System.out.println(dAgregarATabla[iComienzoDetalle]);
+                         }else{                             
                              dAgregarATabla[iComienzoDetalle]=0;
                              sEfecto[iComienzoDetalle]=null;                                                        
                          }                      
@@ -279,7 +292,7 @@ public void funMontoConcepto(int iComienzo,int iComienzoDetalle, double dAgregar
                             tblMatriz.setValueAt(dAgregarATabla[6], (iComienzo-1), 5);
                          cn.close();
                     }catch (Exception e){
-                        System.out.println("Error"+ e);
+                        JOptionPane.showMessageDialog(null,"Error no se puede obtener el monto y efecto"+ e);
                      }                     
                            
 }
@@ -312,20 +325,19 @@ public void funMontoConcepto(int iComienzo,int iComienzoDetalle, double dAgregar
       
         
          funTotalporDepartamento();
-         funVerificarVacioTablaNomina();     
-    }
-        
-         
-       
+         funVerificarVacioTablaNomina();
+         funTotalNomina();
+    }   
     }//GEN-LAST:event_btnMostrarNominaActionPerformed
 public void funVerificarVacioTablaNomina(){
-      int iFila=tblMatriz.getRowCount();
-         int iInicio=0;
+      int iFila=tblMatriz.getRowCount();      
+         int iInicio=1;
          do {   
              iFila=tblMatriz.getRowCount();
                 if (iInicio!=iFila) {                    
-                    String sVerificarLleno= (String) tblMatriz.getValueAt((iInicio), 0);                   
-                     if (sVerificarLleno==null) {                 
+                    String sVerificarLleno= (String) tblMatriz.getValueAt((iInicio), 0);
+                    System.out.println(sVerificarLleno);
+                     if (sVerificarLleno=="") {                 
                     DefaultTableModel modelo = (DefaultTableModel)tblMatriz.getModel();
                     modelo.removeRow(iInicio);   
                     iInicio=iInicio;
@@ -350,7 +362,7 @@ public void funVerificarVacioTablaNomina(){
         }else{             
              dSueldoLiquido=dSueldoLiquido+0;            
        } 
-           tblMatriz.setValueAt(dSueldoLiquido, (iComienzo-1), 7);   
+           tblMatriz.setValueAt(dfFormato.format(dSueldoLiquido), (iComienzo-1), 7);   
     }
    
 }
@@ -381,7 +393,7 @@ public void funVerificarVacioTablaNomina(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del departamento"+ e);
         }
 }
    public void funCalculoporDepartamento(int iComienza){
@@ -407,18 +419,14 @@ public void funVerificarVacioTablaNomina(){
                         
                      }
                }
-           }else{             
-                
-               dTotalporDepartamento=dTotalporDepartamento+0;
-              
+           }else{           
+               dTotalporDepartamento=dTotalporDepartamento+0;             
             }           
               //
-                 
-           
-            tblTotal.setValueAt(dTotalporDepartamento, (iComienza-1), 1);
+            tblTotal.setValueAt(dfFormato.format(dTotalporDepartamento), (iComienza-1), 1);
             cn.close();
         }catch (Exception e){
-           System.out.println("gg"+ e);
+           JOptionPane.showMessageDialog(null,"Error no se puede obtener el monto y concepto para el total por departamento"+ e);
         }  
    }
    public void funNombreDepartamento(int iComienza){
@@ -434,7 +442,7 @@ public void funVerificarVacioTablaNomina(){
      
                          cn.close();
                     }catch (Exception e){
-                        System.out.println("gg"+ e);
+                        JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre del departamento"+ e);
                      } 
 }
    public void funLimpiarTablas(){
@@ -453,6 +461,21 @@ public void funVerificarVacioTablaNomina(){
                 //vamos removiendo cada fila del model y por lo tanto tambien de la tabla tblTotal
                 dftModeloLimpiador2.removeRow(0);
             }
+   }
+   public void funTotalNomina(){
+       try{
+        Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
+        PreparedStatement pst = cn.prepareStatement("SELECT nomimonto FROM nominaencabezado WHERE nomicodigo=?");    
+        pst.setString(1, sCodigoNominaEncabezado);                   
+        ResultSet rs = pst.executeQuery(); 
+        if (rs.next()) {  
+            lblTotalNomina.setText(rs.getString("nomimonto"));
+         }
+     
+          cn.close();
+        }catch (Exception e){
+         JOptionPane.showMessageDialog(null,"Error no se puede obtener el monto total de la nomina"+ e);
+        } 
    }
     /**
      * @param args the command line arguments
@@ -494,9 +517,11 @@ public void funVerificarVacioTablaNomina(){
     private javax.swing.JButton btnMostrarNomina;
     private javax.swing.JComboBox<String> cmbFechaNominaEncabezado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblTotalNomina;
     private javax.swing.JTable tblMatriz;
     private javax.swing.JTable tblTotal;
     private javax.swing.JTable tblTotal1;

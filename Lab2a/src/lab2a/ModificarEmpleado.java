@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.ComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,7 +40,7 @@ public void funPuesto(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los puestos"+ e);
         }
 }
 public void funDepartamento(){
@@ -54,7 +55,7 @@ public void funDepartamento(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los departamentos"+ e);
         }
 }
 public void funEmpleado(){
@@ -69,7 +70,7 @@ public void funEmpleado(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener los nombres de los empleados"+ e);
         }
 }
     /**
@@ -201,7 +202,7 @@ public void funEmpleado(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre,sueldo,departamento y sueldo del empleado"+ e);
         } 
         }
     }//GEN-LAST:event_cmbEmpleadoItemStateChanged
@@ -218,7 +219,7 @@ public void funEmpleado(){
                 }
                 cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del departamento"+ e);
             }
         }
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
@@ -236,7 +237,7 @@ public void funEmpleado(){
             }                      
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo del puesto"+ e);
         } 
         }
     }//GEN-LAST:event_cmbPuestoItemStateChanged
@@ -249,9 +250,10 @@ public void funEmpleado(){
             pst.setString(2, sCodigoDepartamento);
             pst.setString(3, sCodigoPuesto);
             pst.executeUpdate();
-            txtSueldo.setText("");           
+            txtSueldo.setText("");   
+            JOptionPane.showMessageDialog(null,"Modificacion de datos Exitoso");
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Error no se puede modificar la informacion"+ e);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

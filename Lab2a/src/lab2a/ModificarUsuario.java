@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +38,7 @@ public void funUsuario(){
             }            
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre de los empleados"+ e);
         }
 }
     /**
@@ -162,7 +163,7 @@ public void funUsuario(){
                 }
                 cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo,nombre de usuario,la contraseña y el estado del ususario"+ e);
             }
         }
     }//GEN-LAST:event_cmbUsuarioItemStateChanged
@@ -182,10 +183,11 @@ public void funEstatus(){
             pst.setString(2, txtcontraseña.getText().trim());   
             pst.setString(3, Integer.toString(iEstatus));   
             pst.executeUpdate();  
+            JOptionPane.showMessageDialog(null,"Modificacion de datos Exitoso");
             txtusuario.setText("");     
             txtcontraseña.setText("");
         } catch (Exception e) {
-            System.out.println(e);
+           JOptionPane.showMessageDialog(null,"Error no se puede modificar la informacion"+ e);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

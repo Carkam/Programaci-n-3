@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2019 a las 08:35:43
+-- Tiempo de generación: 21-03-2019 a las 04:59:30
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.3.1
 
@@ -64,7 +64,12 @@ CREATE TABLE `departamentos` (
 
 INSERT INTO `departamentos` (`depcodigo`, `depnombre`, `depestatus`) VALUES
 ('1', 'Informatica', 1),
-('2', 'Contabilidad', 1);
+('2', 'Contabilidad', 1),
+('3', 'Publicidad y Mercadotecnia', 1),
+('4', 'Finanzas', 1),
+('5', 'Dirección General', 1),
+('6', 'Auxiliar Administrativo', 1),
+('7', 'Recursos Humanos', 1);
 
 -- --------------------------------------------------------
 
@@ -89,7 +94,11 @@ INSERT INTO `empleados` (`empcodigo`, `empnombre`, `sueldo_emp`, `depcodigo`, `c
 ('1', 'Carlos Laib', 15000.00, '1', '1', 1),
 ('2', 'Jose Lopez', 5000.00, '1', '1', 1),
 ('3', 'Fernando Argueta', 6000.00, '2', '2', 1),
-('4', 'Bryan Aguirre', 7500.00, '2', '2', 1);
+('4', 'Bryan Aguirre', 7500.00, '2', '2', 1),
+('5', 'Bryan Mazariegoz', 7000.00, '4', '9', 1),
+('6', 'Alexis Urias', 6500.00, '6', '6', 1),
+('7', 'Ricardo Perez', 7500.00, '3', '5', 1),
+('8', 'Sergio Orozco', 8000.00, '7', '8', 1);
 
 -- --------------------------------------------------------
 
@@ -112,18 +121,23 @@ INSERT INTO `nominadetalles` (`nomicodigo`, `empcodigo`, `concodigo`, `nomidtota
 ('1', '1', '2', 724.50),
 ('1', '1', '3', 15000.00),
 ('1', '1', '4', 1500.00),
-('1', '2', '1', 250.00),
-('1', '2', '2', 241.50),
 ('1', '2', '3', 5000.00),
-('1', '3', '2', 289.80),
+('1', '2', '4', 150.00),
 ('1', '3', '3', 6000.00),
-('1', '3', '4', 300.00),
-('1', '4', '2', 362.25),
+('1', '3', '5', 1000.00),
 ('1', '4', '3', 7500.00),
-('1', '4', '4', 375.00),
+('1', '7', '3', 7500.00),
+('1', '8', '3', 8000.00),
+('1', '8', '5', 1000.00),
 ('2', '1', '3', 15000.00),
 ('2', '2', '3', 5000.00),
-('2', '3', '3', 6000.00);
+('2', '3', '3', 6000.00),
+('2', '5', '3', 7000.00),
+('2', '8', '3', 8000.00),
+('3', '1', '3', 15000.00),
+('3', '3', '3', 6000.00),
+('3', '5', '3', 7000.00),
+('3', '7', '3', 7500.00);
 
 -- --------------------------------------------------------
 
@@ -143,8 +157,9 @@ CREATE TABLE `nominaencabezado` (
 --
 
 INSERT INTO `nominaencabezado` (`nomicodigo`, `fecha_inicial_nomina`, `fecha_final_nomina`, `nomimonto`) VALUES
-('1', '2019-03-01', '2019-03-02', 39506.95),
-('2', '2019-03-02', '2019-03-31', 33500.00);
+('1', '2019-03-01', '2019-03-02', 48625.50),
+('2', '2019-03-03', '2019-03-31', 41000.00),
+('3', '2019-04-01', '2019-04-30', 35500.00);
 
 -- --------------------------------------------------------
 
@@ -164,7 +179,14 @@ CREATE TABLE `puestos` (
 
 INSERT INTO `puestos` (`codigo_puesto`, `depnombre`, `depestatus`) VALUES
 ('1', 'Programador', 1),
-('2', 'Secretaria', 1);
+('2', 'Secretaria', 1),
+('3', 'Director Ejecutivo', 1),
+('4', 'Gerente', 1),
+('5', 'Jefe de Marketing', 1),
+('6', 'Conserge', 1),
+('7', 'Director Comercial', 1),
+('8', 'Director de Recursos Humanos', 1),
+('9', 'Director Financiero', 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +207,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`codigo_usuario`, `nombre_usuario`, `clave_usuario`, `estado_usuario`, `empcodigo`) VALUES
-('1', 'kami', '1', 1, '1');
+('1', 'kami', '1', 1, '1'),
+('2', 'chipa', '123', 1, '2');
 
 --
 -- Índices para tablas volcadas

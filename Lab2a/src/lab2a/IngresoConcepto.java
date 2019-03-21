@@ -115,11 +115,12 @@ public void funConsulta(){
                 pst.setString(2, txtConcepto.getText().trim());
                 pst.setString(3, sEfecto);
                 pst.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Ingreso de datos Exitoso");
                 txtConcepto.setText("");
                 iCodigo=1;
                 cn.close();
             }catch (Exception e){
-                System.out.println("gg"+ e);
+                JOptionPane.showMessageDialog(null,"Error no se puede ingresar la informacion"+ e);
             } 
 }
 public void codigo(){
@@ -134,7 +135,7 @@ public void codigo(){
 
             cn.close();
         }catch (Exception e){
-            System.out.println("gg"+ e);
+            JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo"+ e);
         }
 }
 public void funEfecto(){
