@@ -98,6 +98,7 @@ String sEfecto;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+     /*Guarda la informacion en la tabla de la base de datos*/
         if (txtConcepto.getText().equals("")) {
             JOptionPane.showMessageDialog(null,"El nombre del Concepto no puede estar vacio");
         }else{
@@ -107,6 +108,7 @@ String sEfecto;
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 public void funConsulta(){
+    /*Metodo para guardar la informacion en la base de datos*/
    try{
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
                 PreparedStatement pst = cn.prepareStatement("insert into concepto values(?,?,?)");
@@ -124,6 +126,7 @@ public void funConsulta(){
             } 
 }
 public void codigo(){
+    /*MEtodo para obtener un codigo automatico*/
             try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM concepto ORDER BY concodigo DESC");                 
@@ -139,6 +142,7 @@ public void codigo(){
         }
 }
 public void funEfecto(){
+    /*Metodo para obtener el efecto que tendra el concepto*/
     if (cmbEfecto.getSelectedItem().equals("Suma")) {
         sEfecto="+";
     }else if (cmbEfecto.getSelectedItem().equals("Resta")) {

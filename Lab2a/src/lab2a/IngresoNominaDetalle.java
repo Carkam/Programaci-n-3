@@ -34,6 +34,8 @@ DecimalFormat dfFormato=new DecimalFormat("0.00");
         funConcepto();
     }
 public void funNominaEncabezado(){
+   /*Metodo para obtener la fecha inicial y la fecha final de la tabla de nomina encabezado
+    de la base de datos y mostrarlo en un solo combobox*/
       try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM nominaencabezado");                 
@@ -49,6 +51,7 @@ public void funNominaEncabezado(){
         }
 }
 public void funEmpleado(){
+    /*Este metodo obtiene todos los nombres de los empleados existentes en la base de datos y los agrega uno por uno al combobox*/
       try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM empleados");                 
@@ -64,6 +67,7 @@ public void funEmpleado(){
         }
 }
 public void funConcepto(){
+    /*Este metodo obtiene todos los conceptos existentes en la base de datos para agregarlos uno por uno en el combobox*/
       try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM concepto");                 
@@ -79,6 +83,8 @@ public void funConcepto(){
         }
 }
 public void funTokensFecha(){
+     /*Este metodo nos sirve para separa en dos variables las fechas que existen en el combobox*/
+    /*Obtenemos el texto del combobox y usamos tokens para separa la fecha en dos*/
      StringTokenizer stToken=new StringTokenizer((String) cmbNominaEncabezado.getSelectedItem()," al ");        
         while(stToken.hasMoreTokens()){
         sFechaInicial=stToken.nextToken();
@@ -197,18 +203,20 @@ public void funTokensFecha(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        // TODO add your handling code here:
+        /*Verifica si el textbox esta vacio o si el ingresan letras*/
         if (txtMonto.getText().equals("")) {
            JOptionPane.showMessageDialog(null,"El Monto no puede estar vacio");  
         }else if (txtMonto.getText().matches("[a-zA-Z\\s]*")) {
            JOptionPane.showMessageDialog(null,"El Monto no pueden ser letras");  
         }else{
+            //Llama a todos los metodos para ver si se calcula automaticamente el monto o no y mostrarlo en el textbox
         funConsultaNominaDetalles();
         CalculoMontoNominaEncabezado();
         funConsultaNominaEncabezado();
         }
     }//GEN-LAST:event_btnAñadirActionPerformed
 public void funConsultaNominaDetalles(){
+    /*Este metodo Guarda la informacion en el base de datos en la tabla de nomina detalles */
     try{
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
                 PreparedStatement pst = cn.prepareStatement("insert into nominadetalles values(?,?,?,?)");
@@ -224,18 +232,19 @@ public void funConsultaNominaDetalles(){
             }
 }
 public void funConsultaNominaEncabezado(){
+    /*Este metodo nos modifica el valor actual que tiene el la tabla de nomina encabezado*/
      try {            
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("update nominaencabezado set nomimonto = ? where nomicodigo = " + sCodigoNominaEncabezado);
             pst.setString(1, Double.toString(dValorNominaEncabezado));          
             pst.executeUpdate();  
-             txtMonto.setText("");
-             JOptionPane.showMessageDialog(null,"IMOdificaciondel monto existo");
+             txtMonto.setText("");            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error no se puede modificar el monto de la nomina"+ e);
         }
 }
 public void CalculoMontoNominaEncabezado(){
+    /*Este metodo funciona para sumarle a la variable de nomina encabezado segun ele efecto que tenga el concepto*/
     double dMonto=Double.parseDouble(txtMonto.getText());
 if (sEfecto.equals("+")) {
        dValorNominaEncabezado=dValorNominaEncabezado+dMonto;    
@@ -245,6 +254,7 @@ if (sEfecto.equals("+")) {
     
 }
     private void cmbNominaEncabezadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbNominaEncabezadoItemStateChanged
+       /*Metodo para obtener el codigo de la nomina encabezado y su valor cada vez que se cambie la opcion en el combo box*/
         if (evt.getStateChange()==ItemEvent.SELECTED) {
              funTokensFecha();
          try{
@@ -263,6 +273,7 @@ if (sEfecto.equals("+")) {
         }     
     }//GEN-LAST:event_cmbNominaEncabezadoItemStateChanged
 public void funCodigoSueldoEmpleado(){
+    /*Metido para obtener el codigo y el sueldo dem empleado segun el empleado seleccionado en el combobox*/
    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT empcodigo, sueldo_emp FROM empleados WHERE empnombre=?");    
@@ -278,7 +289,9 @@ public void funCodigoSueldoEmpleado(){
         }  
 }
     private void cmbEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEmpleadoItemStateChanged
-       if (evt.getStateChange()==ItemEvent.SELECTED) {  
+      /*Segun la opcion seleccionada en el combobox el textbox se bloqueara y se calculara automaticamente ya sea el igss, el isr o el sueldo base
+        del empleado*/
+        if (evt.getStateChange()==ItemEvent.SELECTED) {  
             funCodigoSueldoEmpleado();           
             if (bAviso==true) {
                 txtMonto.enable(false);
@@ -299,11 +312,13 @@ public void funCodigoSueldoEmpleado(){
         }        
     }//GEN-LAST:event_cmbEmpleadoItemStateChanged
 public double funCalculoIGSS(double dSueldoBase){
+    /*MEtodo para calcular el igss*/
     double dCalculoIGSS;  
        dCalculoIGSS=dSueldoBase*IGSS;
        return dCalculoIGSS;            
 }
 public double funCalculoISR(double dSueldoBase){
+    /*Metodo para calcular el isr del empleado*/
     int [][] iISR=new int[][]{{1,5000},{5001,10000},{10001,100000}};
     double dCalculoIsr = 0;
     if ((dSueldoBase>=iISR[0][0]) && (dSueldoBase<=iISR[0][1])) {
@@ -316,6 +331,7 @@ public double funCalculoISR(double dSueldoBase){
    return dCalculoIsr;     
 }
     private void cmbConceptoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbConceptoItemStateChanged
+        /*Segun la opcion elegida en el concepto se obtendra el codigo del concepto y su efecto segun el nombre del concepto*/
         if (evt.getStateChange()==ItemEvent.SELECTED) { 
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
@@ -324,15 +340,15 @@ public double funCalculoISR(double dSueldoBase){
             ResultSet rs = pst.executeQuery(); 
                 if(rs.next()){
                     sCodigoConcepto=rs.getString("concodigo");
-                    sEfecto=rs.getString("conefecto");
-                    System.out.println(sEfecto);
+                    sEfecto=rs.getString("conefecto");                    
                  }            
                 cn.close();
         }catch (Exception e){
              JOptionPane.showMessageDialog(null,"Error no se puede obtener el codigo y efecto del concepto"+ e);
         }
-        //          
-        if (cmbConcepto.getSelectedItem().equals("Sueldo")) {            
+        /*Segun el la opcion elegida en el combobox el se mostrara y se calculara el igss, el isr y el sueldo y bloquera el textbox para que
+        no se pueda modificar*/          
+        if (cmbConcepto.getSelectedItem().equals("Sueldo Base")) {            
              txtMonto.enable(false);
              txtMonto.setText(sSueldo); 
              bAviso=true;   

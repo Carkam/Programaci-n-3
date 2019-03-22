@@ -27,7 +27,8 @@ int iEstatus;
         funUsuario();
     }
 public void funUsuario(){
-      try{
+    /*Metodo para obtener el nombre de todos los empleados de la base de datos segun el usuario*/  
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT empleados.empnombre FROM usuarios, empleados WHERE usuarios.empcodigo=empleados.empcodigo");                 
             ResultSet rs = pst.executeQuery(); 
@@ -143,6 +144,7 @@ public void funUsuario(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbUsuarioItemStateChanged
+        /*Segun la opcion elegida se obtendra el codigo del usuario, y se mostrara en el textbos su usuario,contraseña y estatus*/
         if (evt.getStateChange()==ItemEvent.SELECTED) {
             
             try{
@@ -168,6 +170,7 @@ public void funUsuario(){
         }
     }//GEN-LAST:event_cmbUsuarioItemStateChanged
 public void funEstatus(){
+    /*Si se modifica el estado del checkbox el estatus cambiara de 0 a 1 o viceversa*/
     if (chkEstatus.isSelected()) {
         iEstatus=1;
     }else{
@@ -175,7 +178,8 @@ public void funEstatus(){
     }
 }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-       funEstatus();
+       /*Boton para modificar toda la informacion de la base de datos*/
+        funEstatus();
         try {            
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("update usuarios set nombre_usuario = ?, clave_usuario=?, estado_usuario=? where codigo_usuario = " + sCodigoUsuario);

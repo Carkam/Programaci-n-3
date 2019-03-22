@@ -26,7 +26,8 @@ String sCodigoPuesto;
         funPuesto();
     }
 public void funPuesto(){
-      try{
+    /*Metodo para obtener el nombre de todos los puestos de la base de datos */ 
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM puestos");                 
             ResultSet rs = pst.executeQuery(); 
@@ -111,7 +112,8 @@ public void funPuesto(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbPuestoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPuestoItemStateChanged
-          if (evt.getStateChange()==ItemEvent.SELECTED) {         
+        /*Segun la opcion elegida se obtendra el codigo del puesto*/  
+        if (evt.getStateChange()==ItemEvent.SELECTED) {         
          txtPuesto.setText((String)this.cmbPuesto.getSelectedItem());
           try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
@@ -129,7 +131,8 @@ public void funPuesto(){
     }//GEN-LAST:event_cmbPuestoItemStateChanged
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-           try {            
+        /*Boton para modificar toda la informacion de la base de datos*/
+        try {            
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("update puestos set depnombre = ? where codigo_puesto = " + sCodigoPuesto);
             pst.setString(1, txtPuesto.getText().trim());          

@@ -29,7 +29,8 @@ String sCodigoEmpleado, sCodigoDepartamento, sCodigoPuesto;
         funPuesto();
     }
 public void funPuesto(){
-      try{
+    /*Metodo para obtener el nombre de todos los puestos de la base de datos*/  
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM puestos");                 
             ResultSet rs = pst.executeQuery(); 
@@ -44,7 +45,8 @@ public void funPuesto(){
         }
 }
 public void funDepartamento(){
-      try{
+    /*Metodo para obtener todos los nombres de la base de datos*/ 
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT depnombre FROM departamentos");                 
             ResultSet rs = pst.executeQuery(); 
@@ -59,7 +61,8 @@ public void funDepartamento(){
         }
 }
 public void funEmpleado(){
-      try{
+    /*Metodo par aobtener el nombre de todos los empleados de la base de datos*/ 
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT empnombre FROM empleados");                 
             ResultSet rs = pst.executeQuery(); 
@@ -188,7 +191,8 @@ public void funEmpleado(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEmpleadoItemStateChanged
-       if (evt.getStateChange()==ItemEvent.SELECTED) {                
+      /*Segun la opcion elegida en el combobox obtendra el codigo del empleado y mostrara el sueldo del empleado, el departamento y el puesto que le pertenecen*/
+        if (evt.getStateChange()==ItemEvent.SELECTED) {                
           try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT empleados.empcodigo, empleados.sueldo_emp, departamentos.depnombre, puestos.depnombre FROM empleados,departamentos, puestos WHERE empleados.depcodigo=departamentos.depcodigo and empleados.codigo_puesto=puestos.codigo_puesto and empleados.empnombre=?");    
@@ -208,7 +212,8 @@ public void funEmpleado(){
     }//GEN-LAST:event_cmbEmpleadoItemStateChanged
 
     private void cmbDepartamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDepartamentoItemStateChanged
-          if (evt.getStateChange()==ItemEvent.SELECTED) {
+       /*Segun la opcion elegida obtendra el cogido del departamento*/   
+        if (evt.getStateChange()==ItemEvent.SELECTED) {
             try{
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
                 PreparedStatement pst = cn.prepareStatement("SELECT depcodigo FROM departamentos WHERE depnombre=?");
@@ -225,7 +230,8 @@ public void funEmpleado(){
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
 
     private void cmbPuestoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPuestoItemStateChanged
-       if (evt.getStateChange()==ItemEvent.SELECTED) {      
+       /*Segun la opcion elegida obtendra el codigo del puesto*/
+        if (evt.getStateChange()==ItemEvent.SELECTED) {      
    
           try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
@@ -243,6 +249,7 @@ public void funEmpleado(){
     }//GEN-LAST:event_cmbPuestoItemStateChanged
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        /*Boton para guardar toda la informacion en la base de datos*/
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("update empleados set sueldo_emp = ?,depcodigo=?, codigo_puesto=? where empcodigo = " + sCodigoEmpleado);

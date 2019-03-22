@@ -82,6 +82,7 @@ int iCodigo=1;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        /*Boton donde se guarda la informacion del departamento*/
         if (txtDepartamento.getText().equals("")) {
             JOptionPane.showMessageDialog(null,"El nombre del Departamento no puede estar vacio");
         }else{
@@ -104,7 +105,8 @@ int iCodigo=1;
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 public void codigo(){
-            try{
+    /*Metodo para obtner el codigo automatico de departamentos*/       
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM departamentos ORDER BY depcodigo DESC");                 
             ResultSet rs = pst.executeQuery();         

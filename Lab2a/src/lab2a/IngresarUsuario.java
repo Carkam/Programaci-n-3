@@ -122,6 +122,7 @@ String sCodigoEmpleado;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 public void funNombreEmpleados(){
+    /*Metodo para obetner todos los empleados de la base de datos*/
       try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM empleados");                 
@@ -137,7 +138,8 @@ public void funNombreEmpleados(){
         }
 }
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
-        //mandamos a llamar a la funcion estatus
+       /*En este boton se guardaran todos los datos del usuario en la base de datos*/
+        
        codigo();
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
@@ -157,6 +159,7 @@ public void funNombreEmpleados(){
         }
     }//GEN-LAST:event_btnregistrarActionPerformed
 public void codigo(){
+    /*Metodo para obtener el codigo maximo del usuario y sumarle uno para guardarlo en la base de datos*/
             try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM usuarios ORDER BY codigo_usuario DESC");                 
@@ -179,6 +182,7 @@ public void codigo(){
     }//GEN-LAST:event_txtregresarActionPerformed
 
     private void cmbEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEmpleadoItemStateChanged
+       /*Segun la opcion elegida se obtendra el codigo del empleado*/
         if (evt.getStateChange()==ItemEvent.SELECTED) {  
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");

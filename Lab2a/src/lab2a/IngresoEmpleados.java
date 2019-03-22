@@ -28,6 +28,7 @@ int iCodigo=1;
         funDepartamento();
     }
 public void funPuesto(){
+    /*Metodo para obtener todos los puestos de la base de datos*/
           try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM puestos");                 
@@ -43,6 +44,7 @@ public void funPuesto(){
         }
 }
 public void funDepartamento(){
+    /*Metodo para obtener todos los departamentos de la base de datos*/
           try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM departamentos");                 
@@ -165,7 +167,8 @@ public void funDepartamento(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbDepartamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDepartamentoItemStateChanged
-         if (evt.getStateChange()==ItemEvent.SELECTED) {  
+      /*Segun la opcion seleccionada se obtiene el codigo del combo box*/
+        if (evt.getStateChange()==ItemEvent.SELECTED) {  
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT depcodigo FROM departamentos WHERE depnombre=?");    
@@ -183,7 +186,8 @@ public void funDepartamento(){
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
 
     private void cmbPuestoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPuestoItemStateChanged
-       if (evt.getStateChange()==ItemEvent.SELECTED) {
+      /*Segun la opcion seleccionada se obtiene el codigo del combo box*/
+        if (evt.getStateChange()==ItemEvent.SELECTED) {
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT codigo_puesto FROM puestos WHERE depnombre=?");    
@@ -201,6 +205,7 @@ public void funDepartamento(){
     }//GEN-LAST:event_cmbPuestoItemStateChanged
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+      /*Se guarda toda la informacion en l a tabla*/
         if (txtNombreEmp.getText().equals("")) {
             JOptionPane.showMessageDialog(null,"El nombre del Empleado no puede estar vacio");
         }else if (txtSueldo.getText().equals("")) {
@@ -215,7 +220,8 @@ public void funDepartamento(){
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSueldoActionPerformed
 public void codigo(){
-            try{
+    /*Se obtiene un codigo automatico para guardarla*/       
+    try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM empleados ORDER BY empcodigo DESC");                 
             ResultSet rs = pst.executeQuery();         
@@ -229,6 +235,7 @@ public void codigo(){
         }
 }
 public void funConsulta(){
+    /*Metodo para ingresar el toda informacion a al abase de datos*/
     try{
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
                 PreparedStatement pst = cn.prepareStatement("insert into empleados values(?,?,?,?,?,?)");

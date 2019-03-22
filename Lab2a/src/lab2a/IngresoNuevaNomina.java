@@ -32,6 +32,7 @@ SimpleDateFormat sdfFormat=new SimpleDateFormat("yyyy-MM-dd");
         funFechaFinal();
     }
 public void codigo(){
+    /*Se obtiene el codigo maximo para sumarle uno y guardarlo en la base de datos*/
             try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM nominaencabezado ORDER BY nomicodigo DESC");                 
@@ -46,6 +47,7 @@ public void codigo(){
         }
 }
 public void funFechaFinal(){
+    /*Muestra la fecha final del anterior registro y llama al metodo de nueva fecha*/
        try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT fecha_final_nomina FROM nominaencabezado WHERE nomicodigo=?");  
@@ -61,6 +63,7 @@ public void funFechaFinal(){
         }
 }
 public void funNuevafecha(){
+    /*Este metodo verificara la fecha anterior para poder incrementarla en un dia y mostrarala en el label*/
     int iDias = 0,iMeses=0,iAños=0;
     String sDias,sMeses;
          StringTokenizer stTokens=new StringTokenizer(sFechaInicial,"-");        
@@ -181,6 +184,7 @@ public void funNuevafecha(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 public void funCOnsulta(){
+    /*Metodo para ingresar los datos en la tabla*/
     codigo();   
             try{
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
@@ -199,7 +203,8 @@ public void funCOnsulta(){
             }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String sFecha=lblFechaIncial.getText();
+      /*Boton para guardar los datos y seprar en tokens para verificar si las fechas son iguales o anteriores*/
+        String sFecha=lblFechaIncial.getText();
         StringTokenizer stTokens=new StringTokenizer(sFecha,"-");        
         while(stTokens.hasMoreTokens()){
         iAño=Integer.parseInt(stTokens.nextToken());

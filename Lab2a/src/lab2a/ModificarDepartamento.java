@@ -26,6 +26,7 @@ String sCodigoDepartamento;
         funDepartamento();
     }
 public void funDepartamento(){
+    /*Metodo para obtener todos los nombres de los departamentos existentes en la base de datos*/
       try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT depnombre FROM departamentos");                 
@@ -115,6 +116,7 @@ public void funDepartamento(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbDepartamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDepartamentoItemStateChanged
+       /*Segun la opcion para obtener el codigo del departamento*/
         if (evt.getStateChange()==ItemEvent.SELECTED) {
             txtDepartamento.setText((String)this.cmbDepartamento.getSelectedItem());
             try{
@@ -133,6 +135,7 @@ public void funDepartamento(){
     }//GEN-LAST:event_cmbDepartamentoItemStateChanged
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+       /*Boton para guardar toda la informacion en la base de datos*/
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("update departamentos set depnombre = ? where depcodigo = " + sCodigoDepartamento);

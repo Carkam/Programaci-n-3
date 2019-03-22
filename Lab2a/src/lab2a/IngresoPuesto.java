@@ -81,6 +81,7 @@ int iCodigo=1;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+      /*Se guarda toda la informacionen la base de datos*/
         if (txtPuesto.getText().equals("")) {
             JOptionPane.showMessageDialog(null,"El nombre del Puesto no puede estar vacio");
         }else{ 
@@ -103,6 +104,7 @@ int iCodigo=1;
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 public void codigo(){
+    /*Metodo para obtener un codigo automatico*/
             try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/nomina", "root", "");
             PreparedStatement pst = cn.prepareStatement("SELECT * FROM puestos ORDER BY codigo_puesto DESC");                 
