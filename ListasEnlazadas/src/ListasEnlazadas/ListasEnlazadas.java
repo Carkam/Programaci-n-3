@@ -18,16 +18,19 @@ public class ListasEnlazadas
 	public ListasEnlazadas()
 	{           
 		Primero=null;
-	}
+	}       
+      
         /*Metodo para verificar si la lista esta vacia*/
-	public boolean vacia()
+	public boolean EsVacia()
 	{
 		if (Primero==null)
 		{
-			return(true);
+                    System.out.println("La lista esta vacia");
+			return true;
 		} else
 		{
-			return(false);
+		System.out.println("La lista no esta vacia");
+                return false;
 		}
 	}
         /*Metodo para insertar un nodo en la primera posicion y los demas nodos
@@ -79,7 +82,7 @@ public class ListasEnlazadas
 		int k=0;
 		if (pos>0)
 		{
-                    /*Ciclo para encontrar la posicion a bucar, borrar ese nodo y correr los demas*/
+                    /*Ciclo para encontrar la posicion a buscar, borrar ese nodo y correr los demas*/
 			while (k!=pos && actual.Siguiente != null)
 			{
 				anterior=actual;
@@ -90,5 +93,39 @@ public class ListasEnlazadas
 			anterior.Siguiente=actual.Siguiente;
 		}
 	}
+        /*Metodo para insertar un nodo entre nodos*/
+        public void InsertarEntreNodos(int Dato, int pos){
+            Nodo anterior=Primero;
+            Nodo actual= Primero;
+            Nodo Temporal=new Nodo(Dato);
+            int k=0;
+            /*Ciclo para encontrar la posicion a buscar y correr ese nodo e insertar el nuevo ahi*/
+            if (pos>0) {
+                while(k!=pos && actual.Siguiente!=null){
+                    anterior=actual;
+                    actual=actual.Siguiente;
+                    Temporal.Siguiente=actual;
+                    k++;
+                }
+                      
+             anterior.Siguiente=Temporal;
+             actual=Temporal.Siguiente; 
+		
+            }
+        }
+        /*Metodo para localizar el dato que se esta buscando*/
+        public void Localizar(int Dato){
+           Nodo aux=Primero;
+           int posicion=0;
+            if (aux.info==Dato) {
+                System.out.println("Es el primero en la lista");
+            }else{
+                    while(aux.info!=Dato){
+                       aux=aux.Siguiente; 
+                       posicion++;
+                    }
+                  System.out.println("Esta en la posicion "+posicion);  
+            }
+        }
 
 }

@@ -16,6 +16,7 @@ public class Inicio {
      */
     public static void main(String[] args) {
         ListasEnlazadas miLista=new ListasEnlazadas();
+        miLista.EsVacia();
 	miLista.InsertarEnPrimero(10);
 	miLista.InsertarEnPrimero(15);
 	miLista.InsertarEnPrimero(30);
@@ -23,11 +24,17 @@ public class Inicio {
 	miLista.InsertarEnPrimero(40);
 	miLista.InsertarEnPrimero(60);
 	System.out.println(miLista.Listar());
-	System.out.println("borrar");
-	miLista.borrarUltimo();
+	System.out.println("Borrar Primer y Ultimo");  
         miLista.borrarPrimero();
-	
+        miLista.borrarUltimo();
+        System.out.println(miLista.Listar());
+        System.out.println("El valor a insertar es el 55 en la posicion 2");       
+	miLista.InsertarEntreNodos(55, 2);
+         System.out.println(miLista.Listar());
+        System.out.println("El valor a buscar es el 15");  
+	miLista.Localizar(15);
 	System.out.println(miLista.Listar());
+         miLista.EsVacia();
 // TODO code application logic here
     }
     
