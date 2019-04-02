@@ -18,7 +18,7 @@ public class Lista {
 	private class Nodo {
                 /*Variable de tipo libro para contener la informacion necesario de un libro*/
 		public Libro libro;
-                /*Variable siguiente para porder en lazar la lista*/
+                /*Variable siguiente para poder enlazar la lista*/
 		public Nodo siguiente=null;
 		public Nodo(Libro libro) {
 			this.libro=libro;
@@ -220,11 +220,25 @@ public class Lista {
 		while (aux!=null)
 		{
                     
-			Dato+=n+"                     "+ aux.libro.getTitulo()+"                          "+aux.libro.getAutor()+"                        "+aux.libro.getIsbn()+ "\n";
+			Dato+=n+"                           "+ aux.libro.getTitulo()+"                              "+aux.libro.getAutor()+"                           "+aux.libro.getIsbn()+ "\n";
 			aux=aux.siguiente;
                         n++;
 		}            
 		return(Dato);
                 
 	}
+        public void VaciarLista(){
+            /*Metodo para vaciar la lista
+            si cabeza es diferetne de nulo*/
+            if (cabeza!=null){
+                /*Se declara un nodo que contendra lo de cabeza*/
+                Nodo primer = cabeza;
+                /*A cabeza se le vuelve nula*/
+                cabeza=cabeza.siguiente=null;
+                /*El primero tambien se hace nulo*/
+                primer=null;
+                /*Se vuelve la longitud 0 para comenzar la lista nuevamente desde cero*/
+                longitud=0;
+            }
+        }
 }
