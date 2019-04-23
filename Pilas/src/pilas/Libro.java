@@ -8,7 +8,7 @@ package pilas;
 /**
  *
  * @author Carlos Antonio Laib Contreras (0901-17-518)
- * Objeto donde se maneran los datos del libro
+ * Objeto donde se maneran los datos del librogit statu
  */
 public class Libro {
     /*Variables privadas para contener la informacion del libro*/

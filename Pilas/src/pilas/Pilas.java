@@ -18,7 +18,7 @@ public class Pilas {
  *
  *@author Carlos Antonio Laib Contreras (0901-17-518)
  */
-public class Lista {
+
     /*Se declara una variable nodo que sera nula*/
 	private Nodo cabeza=null;
         /*Se declara una variable para tener la longitud de la pila*/
@@ -61,13 +61,14 @@ public class Lista {
 			return Dato;
 		}
 	}
-	public int estaLlena() {
-            /*Metodo para determinar la longitud de la lista*/
-		return longitud;
-	}
-        public boolean estaVacia() {
+        public String estaVacia() {
             /*Metodo para determinar si la lista esta vaica*/
-            return cabeza==null;
+            if (cabeza==null) {
+                return "La pila esta Vacia";
+            }else{
+                return "La pula no esta Vacia";
+            }
+           
         }
         public void POP() {
             /*Metodo para eliminar el primer nodo de la lista
@@ -116,4 +117,4 @@ public class Lista {
             }
         }
 } 
-}
+
