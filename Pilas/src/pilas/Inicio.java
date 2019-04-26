@@ -7,10 +7,9 @@ package pilas;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author alumno
- */
+  /**
+    * @author Carlos Antonio Laib Contreras (0901-17-518) 
+    */
 public class Inicio {      
         public static Pilas miPila = new Pilas();   
         public static void main(String[] args) {

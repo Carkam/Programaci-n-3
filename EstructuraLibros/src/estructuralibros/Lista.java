@@ -72,20 +72,23 @@ public class Lista {
 		} else {
                     /*Se declara una nueva variable que sera lo que actuamente esta en cabeza*/
 			Nodo puntero=cabeza;
+                         Nodo anterior=cabeza;
                         /*Se declara un contador que comenzara en cero*/
 			int contador=0;
                         /*Mientras el contador sea menor a la posicion donde se desea buscar y el siguiente nodo sea diferente de nulo
                         entonces el punto cambiara de posicion al siguiente nodo*/
 			while (contador<n && puntero.siguiente!=null) {
                             /*Puntero ahora cambiara de posicion al siguiente nodo*/
-				puntero=puntero.siguiente;
+                            anterior=puntero;
+                            puntero=puntero.siguiente;
+                            nodo.siguiente=puntero;
                                 /*Le sumaremos 1 al contador para poder terminar el ciclo*/
 				contador++;
 			}
                         /*El siguiente nodo ahora contendra lo que tiene el siguiente nodo de la variable putnero*/
-			nodo.siguiente=puntero.siguiente;
+			anterior.siguiente=nodo;
                         /*El siguiente nodo de puntero ahora tendra la nueva informacion del nuevo nodo*/
-			puntero.siguiente=nodo;
+			puntero=nodo.siguiente;
 		}
                 /*Se incrementa el tamaño de la lista*/
 		longitud++;

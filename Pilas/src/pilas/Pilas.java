@@ -4,20 +4,10 @@
  * and open the template in the editor.
  */
 package pilas;
-
-/**
- *
- * @author alumno
- */
-public class Pilas {
-
     /**
     * @author Carlos Antonio Laib Contreras (0901-17-518)
     */
-    /**
- *
- *@author Carlos Antonio Laib Contreras (0901-17-518)
- */
+public class Pilas {
 
     /*Se declara una variable nodo que sera nula*/
 	private Nodo cabeza=null;
@@ -46,7 +36,7 @@ public class Pilas {
 	}
 	
 	public String TOP() {
-            /*Metodo para obtener la informacion que esta al principio
+            /*Metodo para obtener la informacion que esta al principio de la pila
             Si cabeza es nulo*/
             String Dato="";
 		if (cabeza==null) {
@@ -56,13 +46,14 @@ public class Pilas {
 		} else {
                     /*Se declara una variable que sera lo que actualmente esta en puntero*/
 			Nodo puntero=cabeza;
-                       /*Se inicializa un contador que comenzara en 0*/
+                       /*Se regresa la informacion del libro que esta en el tope de la pila*/
                        Dato="Libro: "+puntero.libro.getTitulo()+"      Autor: "+puntero.libro.getAutor()+"         Isbn: "+puntero.libro.getIsbn();
 			return Dato;
 		}
 	}
         public String estaVacia() {
-            /*Metodo para determinar si la lista esta vaica*/
+            /*Metodo para determinar si la lista esta vacia
+            Verifica si la pila esta via*/
             if (cabeza==null) {
                 return "La pila esta Vacia";
             }else{
@@ -71,7 +62,7 @@ public class Pilas {
            
         }
         public void POP() {
-            /*Metodo para eliminar el primer nodo de la lista
+            /*Metodo para eliminar el tope de la pila
             si cabeza es diferente de nulo*/
             if (cabeza!=null){
                 /*Se declara un nodo que contendra lo de cabeza*/
@@ -79,13 +70,13 @@ public class Pilas {
                 /*A cabeza se le cambiara de posicion y la anterior se volvera nula*/
                 cabeza=cabeza.siguiente;
                 primer=null;
-                /*Se le resta uno para diminuir el tamaño de la lista*/
+                /*Se le resta uno para diminuir el tamaño de la pila*/
                 longitud--;
             }
         }
        
         public String Listar()
-                /*Metodo para mostrar todos los elementos de la lista*/
+                /*Metodo para mostrar todos los elementos de la pila*/
 	{
                 String Dato="";
 		Nodo aux=cabeza;
@@ -103,7 +94,7 @@ public class Pilas {
                 
 	}
         public void VaciarPila(){
-            /*Metodo para vaciar la lista
+            /*Metodo para vaciar la pila
             si cabeza es diferetne de nulo*/
             if (cabeza!=null){
                 /*Se declara un nodo que contendra lo de cabeza*/
@@ -112,7 +103,7 @@ public class Pilas {
                 cabeza=cabeza.siguiente=null;
                 /*El primero tambien se hace nulo*/
                 primer=null;
-                /*Se vuelve la longitud 0 para comenzar la lista nuevamente desde cero*/
+                /*Se vuelve la longitud 0 para comenzar la pila nuevamente desde cero*/
                 longitud=0;
             }
         }
