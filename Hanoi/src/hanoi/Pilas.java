@@ -15,9 +15,9 @@ public class Pilas {
 	private int longitud=0;
         /*Clase donde se declara el nodo y la informacion que este tendra*/
 	private class Nodo {
-                /*Variable de tipo libro para contener la informacion necesario de un libro*/
+                /*Variable de tipo libro para contener la informacion necesario del numero*/
 		public int iNumero;
-                /*Variable siguiente para poder enlazar la lista*/
+                /*Variable siguiente para poder enlazar la pila*/
 		public Nodo siguiente=null;
 		public Nodo(int iNumero) {
 			this.iNumero=iNumero;
@@ -25,7 +25,7 @@ public class Pilas {
 	}
 	public void PUSH(int iNumero) {
             /*Metodo para insertar al principio de la pila
-            Se crea una nueva variable nodo que contendra la informacion del libro*/
+            Se crea una nueva variable nodo que contendra la informacion del numero*/
 		Nodo nodo=new Nodo(iNumero);
                 /*Decimos que el siguiente nodo ahora sera lo que tiene cabeza*/
 		nodo.siguiente=cabeza;
