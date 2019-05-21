@@ -138,42 +138,58 @@ public Nodo InsertarArbolAVL(Nodo nNuevo, Nodo nPivote){
         //actualizando altura
         /*Si el lado izquierdo del pivote es nulo y el lado derecho es diferente de nulo*/
         if((nPivote.nIzquierda==null)&&(nPivote.nDerecha!=null)){
-            /*si el factor del pivote */
+            /*el factor de equilibrieo del pivo ahora sera el factor de equilibreio del lado derecho del pivote sumandole 1*/
             nPivote.iFactore=nPivote.nDerecha.iFactore+1;
+            /*Si el lado derecho del pivote es nulo y el lado izquierdo es diferente de nulo*/
         }else if((nPivote.nDerecha==null)&&(nPivote.nIzquierda!=null)){
+             /*el factor de equilibrieo del pivote ahora sera el factor de equilibreio del lado izquierdo del pivote sumandole 1*/
            nPivote.iFactore=nPivote.nIzquierda.iFactore+1;         
+           /*Si no*/
         }else{
+            /*El factor de equilibrio del pivote sera ahora el maximo entre los dos lados del pivote mas 1*/
         nPivote.iFactore=Math.max(obtenerFactore(nPivote.nIzquierda),obtenerFactore(nPivote.nDerecha))+1;         
         }
+        /*Retorna el nodo nuevo*/
      return nNuevoNodo;
 }
 
-        public boolean insertar(int d){
-          Nodo nuevo= new Nodo(d,null,null);
+public boolean InsertarDato(int iNumeroRecibido){
+    /*Devlara un nuevo nodo donde recibe el numero y los otros dos valores son nulos*/
+    Nodo nNuevo= new Nodo(iNumeroRecibido,null,null);
+    /*Si el nodo razi es nulo*/
         if(nRaiz==null){
-        nRaiz=nuevo;
+            /*El nodo raiz obtiene el nuevo nodo*/
+            nRaiz=nNuevo;
         }else{
-        nRaiz=InsertarArbolAVL(nuevo,nRaiz);
+            /*si no el nodo raiz llamara al metodo de insertar arbol avl mandadole el nuebo nodo y el nodo raiz*/
+             nRaiz=InsertarArbolAVL(nNuevo,nRaiz);
         }
-        return true;
-        }
+        /*Pone la variable boolena como true*/
+  return true;
+}
     public Nodo getnRaiz() {
+        /*Retorna la raiz*/
         return nRaiz;
     } 
 
     public void setnRaiz(Nodo nRaiz) {
+        /*Manda el valor de raiz*/
         this.nRaiz = nRaiz;
     }
 
     //Recorrido preorden, recibe el nodo a empezar (nRaiz) y una linkedlist para ir guardando el recorrido
     public LinkedList preOrden() {
-        LinkedList rec = new LinkedList();
-        preorden(nRaiz, rec);
-        return rec;
+        
+        LinkedList llRecorrido = new LinkedList();
+        
+        preorden(nRaiz, llRecorrido);
+        return llRecorrido;
     }
     
     public void preorden(Nodo aux, LinkedList recorrido) {
+        /*Su aux es diferente nulo*/
         if (aux != null) {
+            
             recorrido.add(aux.getiDato());
             preorden(aux.getnIzquierda(), recorrido);
             preorden(aux.getnDerecha(), recorrido);
