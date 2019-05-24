@@ -20,6 +20,7 @@ public class PanelFondo extends javax.swing.JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        /*Metodo para poner una imagen de fondo*/
         Dimension tam = getSize();
         ImageIcon ImagenFondo = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage());
         g.drawImage(ImagenFondo.getImage(), 0, 0, tam.width, tam.height, null);

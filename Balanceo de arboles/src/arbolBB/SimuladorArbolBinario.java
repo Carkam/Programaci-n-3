@@ -7,52 +7,56 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author
+ * @Carlos Antonio Laib Contreras (0901-17-518)
  */
 public class SimuladorArbolBinario {
-
+    /*Declara una variable de una clase*/
     ArbolBB miArbol = new ArbolBB();
 
     public SimuladorArbolBinario() {
     }
-
-    public boolean insertar(Integer dato) {
+    /*Envia datos para ingresarlo al la lista enlazada*/
+    public boolean InsertarDato(Integer dato) {
         return (this.miArbol.InsertarDato(dato));
     }
     //metodo para mostrar los recorridos del arbol
-    public String preOrden() {
-        LinkedList it = this.miArbol.preOrden();
-        return (recorrido(it, "Recorrido PreOrden"));
+    public String preOrden() {/*Metodo que muestra el recorrido pre orden*/
+        LinkedList llRecorridoPre = this.miArbol.preOrden();
+        return (Recprrido(llRecorridoPre, "Recorrido PreOrden"));
     }
 
-    public String inOrden() {
-        LinkedList it = this.miArbol.inOrden();
-        return (recorrido(it, "Recorrido InOrden"));
+    public String inOrden() {/*Metodo que muestra el recorrido inorden*/
+        LinkedList llRecorridoIn = this.miArbol.inOrden();
+        return (Recprrido(llRecorridoIn, "Recorrido InOrden"));
     }
 
-    public String postOrden() {
-        LinkedList it = this.miArbol.postOrden();
-        return (recorrido(it, "Recorrido PosOrden"));
+    public String postOrden() {/*Metodo que muestra el recorrido postorden*/
+        LinkedList llRecorridopost = this.miArbol.postOrden();
+        return (Recprrido(llRecorridopost, "Recorrido PosOrden"));
     }
     
     //metodo para poder mostrar los tipos d recorrido
-    private String recorrido(LinkedList it, String msg) {
-        int i = 0;
-        String r = msg + "\n";
-        while (i < it.size()) {
-            r += "\t" + it.get(i).toString() + "";
-            i++;
+    
+    private String Recprrido(LinkedList llRecorrido, String sMensaje) {
+        /*Metodo donde nos calcula el recorrido que tiene y luego lo devuelve para mostrarlo*/
+        int iIndice = 0;
+        String sMensajeDevolver = sMensaje + "\n";
+        while (iIndice < llRecorrido.size()) {
+            sMensajeDevolver += "\t" + llRecorrido.get(iIndice).toString() + "";
+            iIndice++;
         }
-        return (r);
+        return (sMensajeDevolver);
     }
     
     
     //Metodo para buscar dato en el nodo
-    public String buscar(Integer dato) {
-        boolean siEsta = this.miArbol.existe(dato);
-        String r = "El dato:" + dato.toString() + "\n";
-        r += siEsta ? "Si se encuentra en el arbol" : "No se encuentra en el arbol";
-        return (r);
+    public String BuscarDato(Integer dato) {
+        /*Metodo para buscar un dato en el arbol 
+        pero verifica si este existe en la lista para luego mostrarlo*/
+        boolean siEsta = this.miArbol.VerificarExistencia(dato);
+        String sMensaje = "El dato:" + dato.toString() + "\n";
+        sMensaje += siEsta ? "Si se encuentra en el arbol" : "No se encuentra en el arbol";
+        return (sMensaje);
     }
 
     public JPanel getDibujo() {

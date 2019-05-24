@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author
+ * @Carlos Antonio Laib Contreras (0901-17-518)
  */
 public class Vistaa extends javax.swing.JFrame {
 
-    private SimuladorArbolBinario simulador = new SimuladorArbolBinario();
+    private SimuladorArbolBinario SimuladordeArbol = new SimuladorArbolBinario();
 
     /**
      * Creates new form Vista
@@ -28,7 +28,7 @@ public class Vistaa extends javax.swing.JFrame {
 
 
     }
-
+/*Metodo donde inicializa los botones para no editarlos*/
     private void inicializar(boolean enable) {
         this.InOrden.setEnabled(enable);
         this.PostOrden.setEnabled(enable);
@@ -191,46 +191,53 @@ public class Vistaa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*Metodo donde envia los datos para insertar los datos en la lista enlazada*/
     private void botonInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInsertarActionPerformed
             int dato = Integer.parseInt(txtdato.getText());
-            if (this.simulador.insertar(dato)) {                
+            /*Envia el dato para insertarlo a la lista enlazada*/
+            if (this.SimuladordeArbol.InsertarDato(dato)) {        
+                /*Vuelve todos los botones editables*/
                 this.inicializar(true);             
-                complementos();
+                /*Llama al metodo complementos*/
+                Complementos();
         }
     }//GEN-LAST:event_botonInsertarActionPerformed
 
     private void InOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InOrdenActionPerformed
-        // TODO add your handling code here:
-        String recorrido = null;
-        recorrido = this.simulador.inOrden();
-        
+        String sRecorrido = null;        
+        /*Obtiene todo el recorrido de forma inorden*/
+        sRecorrido = this.SimuladordeArbol.inOrden();
+        /*muestra el recorrido*/
         this.impresion.setText("");
-        this.impresion.setText(recorrido);
+        this.impresion.setText(sRecorrido);
     }//GEN-LAST:event_InOrdenActionPerformed
 
     private void PreOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreOrdenActionPerformed
-        // TODO add your handling code here:
-        String recorrido = null;
-        recorrido = this.simulador.preOrden();
-        
+        String sRecorrido = null;
+        /*Obtiene todo el recorrido de forma preorden*/
+        sRecorrido = this.SimuladordeArbol.preOrden();
+        /*Muestra el recorrido*/
         this.impresion.setText("");
-        this.impresion.setText(recorrido);
+        this.impresion.setText(sRecorrido);
     }//GEN-LAST:event_PreOrdenActionPerformed
 
     private void PostOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PostOrdenActionPerformed
-        // TODO add your handling code here:
-        String recorrido = null;
-        recorrido = this.simulador.postOrden();
-        
+        String sRecorrido = null;
+        /*Obtiene todo el recorrido de forma postorden*/
+        sRecorrido = this.SimuladordeArbol.postOrden();
+        /*Muestra el recorrido*/
         this.impresion.setText("");
-        this.impresion.setText(recorrido);
+        this.impresion.setText(sRecorrido);
     }//GEN-LAST:event_PostOrdenActionPerformed
 
-    public void complementos(){
+    public void Complementos(){
+        /*Vuelve a pintar el arvol*/
         this.repintarArbol();
     }
+    
     private void repintarArbol() {
+        /*Metodo donde el panel lo vuelve a repintar con todos los arboles nuevos en el panel y poner alguno soboton 
+        como que no se pueden modificar*/
         this.jDesktopPane1.removeAll();
         Rectangle tamaño = this.jInternalFrame2.getBounds();
         this.jInternalFrame2 = null;
@@ -239,7 +246,7 @@ public class Vistaa extends javax.swing.JFrame {
         this.jInternalFrame2.setVisible(true);
         this.jInternalFrame2.setBounds(tamaño);
         this.jInternalFrame2.setEnabled(false);
-        this.jInternalFrame2.add(this.simulador.getDibujo(), BorderLayout.CENTER);
+        this.jInternalFrame2.add(this.SimuladordeArbol.getDibujo(), BorderLayout.CENTER);
     }
 
     /**
